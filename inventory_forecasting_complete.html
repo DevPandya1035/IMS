@@ -1,0 +1,681 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.page{padding:16px 0 32px}
+.tabs{display:flex;gap:0;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:20px;overflow-x:auto;flex-shrink:0}
+.tab{padding:9px 13px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;user-select:none}
+.tab.active{color:var(--color-text-primary);border-bottom:2px solid var(--color-text-primary);font-weight:500}
+.tab:hover:not(.active){color:var(--color-text-primary)}
+.sec{display:none}.sec.active{display:block}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:16px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px}
+.kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px}
+.kpi-l{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;font-weight:500;letter-spacing:.04em}
+.kpi-v{font-size:21px;font-weight:500;color:var(--color-text-primary)}
+.kpi-d{font-size:11px;margin-top:3px}
+.up{color:var(--color-text-success)}.dn{color:var(--color-text-danger)}.wr{color:var(--color-text-warning)}
+.ct{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px}
+.cs{font-size:12px;color:var(--color-text-secondary);margin-bottom:10px;margin-top:-6px}
+.sh{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;margin:18px 0 10px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500}
+.ba{background:var(--color-background-success);color:var(--color-text-success)}
+.bb{background:var(--color-background-info);color:var(--color-text-info)}
+.bc{background:var(--color-background-warning);color:var(--color-text-warning)}
+.bd{background:var(--color-background-danger);color:var(--color-text-danger)}
+.bg{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.formula{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 12px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary);border:0.5px solid var(--color-border-tertiary);margin:7px 0}
+.chw{position:relative;width:100%}
+.leg{display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--color-text-secondary);margin-bottom:8px}
+.ld{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:3px;vertical-align:middle}
+.sl-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;font-size:12px;color:var(--color-text-secondary)}
+.sl-row label{display:flex;flex-direction:column;gap:4px;min-width:120px}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+.tbl th{text-align:left;padding:7px 8px;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px;letter-spacing:.04em}
+.tbl td{padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--color-background-secondary)}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px}
+.il{font-size:15px;vertical-align:-2px}
+.prog-bg{background:var(--color-background-secondary);border-radius:4px;height:5px;width:100%;margin-top:4px}
+.prog-f{height:5px;border-radius:4px}
+</style>
+
+<h2 class="sr-only">Inventory forecasting analytics — Holt-Winters simulation, anomaly detection, reorder intelligence and model comparison</h2>
+
+<div class="page">
+<div style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px 20px 12px;margin-bottom:20px">
+  <div style="font-size:16px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px"><i class="ti ti-brain il" aria-hidden="true"></i> AI Forecasting Engine — Full Reference</div>
+  <div style="font-size:12px;color:var(--color-text-secondary)">Interactive models, formula deep-dives, anomaly detection, reorder intelligence & model comparison</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="sw('hw',this)">Holt-Winters</div>
+  <div class="tab" onclick="sw('models',this)">Model Comparison</div>
+  <div class="tab" onclick="sw('anomaly',this)">Anomaly Detection</div>
+  <div class="tab" onclick="sw('reorder',this)">Reorder Intelligence</div>
+  <div class="tab" onclick="sw('accuracy',this)">Accuracy Metrics</div>
+  <div class="tab" onclick="sw('pipeline',this)">Pipeline</div>
+</div>
+
+<!-- ===== TAB 1: HOLT-WINTERS ===== -->
+<div class="sec active" id="s-hw">
+  <div class="sh">LIVE HOLT-WINTERS SIMULATOR</div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="cs">Adjust smoothing parameters to see how the model adapts to your data in real time</div>
+    <div class="sl-row">
+      <label>Alpha (α) — level <span style="font-weight:500;color:var(--color-text-primary)" id="av">0.30</span>
+        <input type="range" min="0.01" max="0.99" step="0.01" value="0.30" id="alpha" oninput="runHW()">
+      </label>
+      <label>Beta (β) — trend <span style="font-weight:500;color:var(--color-text-primary)" id="bv">0.10</span>
+        <input type="range" min="0.01" max="0.99" step="0.01" value="0.10" id="beta" oninput="runHW()">
+      </label>
+      <label>Gamma (γ) — season <span style="font-weight:500;color:var(--color-text-primary)" id="gv">0.20</span>
+        <input type="range" min="0.01" max="0.99" step="0.01" value="0.20" id="gamma" oninput="runHW()">
+      </label>
+      <label>Horizon (days) <span style="font-weight:500;color:var(--color-text-primary)" id="hv">14</span>
+        <input type="range" min="7" max="30" step="1" value="14" id="horizon" oninput="runHW()">
+      </label>
+    </div>
+    <div class="g4" style="margin-bottom:12px">
+      <div class="kpi"><div class="kpi-l">MAPE</div><div class="kpi-v" id="mapeOut">—</div></div>
+      <div class="kpi"><div class="kpi-l">RMSE</div><div class="kpi-v" id="rmseOut">—</div></div>
+      <div class="kpi"><div class="kpi-l">FORECAST (14d)</div><div class="kpi-v" id="fcTot">—</div></div>
+      <div class="kpi"><div class="kpi-l">TREND</div><div class="kpi-v" id="trendOut">—</div></div>
+    </div>
+    <div class="leg">
+      <span><span class="ld" style="background:#3266ad"></span>Actual demand</span>
+      <span><span class="ld" style="background:#BA7517;border:1.5px dashed #BA7517;background:transparent"></span>HW forecast</span>
+      <span><span class="ld" style="background:rgba(50,102,173,0.18)"></span>80% confidence</span>
+    </div>
+    <div class="chw" style="height:220px"><canvas id="hwChart" role="img" aria-label="Holt-Winters forecast chart showing actual demand, predicted line and confidence interval">Holt-Winters demand forecast.</canvas></div>
+  </div>
+
+  <div class="sh">FORMULA BREAKDOWN</div>
+  <div class="g3">
+    <div class="card">
+      <div class="ct">Forecast equation</div>
+      <div class="formula">ŷ(t+h) = ℓ(t) + h·b(t) + s(t+h-m)</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Combines level, trend, and seasonal component to project h steps ahead. m = season length (7 days).</div>
+    </div>
+    <div class="card">
+      <div class="ct">Level update ℓ(t)</div>
+      <div class="formula">ℓ(t) = α(y(t)−s(t−m)) + (1−α)(ℓ(t−1)+b(t−1))</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">High α → model reacts fast to recent data. Low α → smoother, less reactive baseline.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Trend update b(t)</div>
+      <div class="formula">b(t) = β(ℓ(t)−ℓ(t−1)) + (1−β)·b(t−1)</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">High β → trend direction updates quickly. Low β → trend is more stable and inertial.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Seasonal factor s(t)</div>
+      <div class="formula">s(t) = γ(y(t)−ℓ(t−1)−b(t−1)) + (1−γ)·s(t−m)</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Captures repeating weekly / annual cycles. High γ → seasonal pattern updates rapidly.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Initialisation</div>
+      <div class="formula">ℓ(0) = mean(y[1..m])<br>b(0) = (mean(y[m+1..2m]) − mean(y[1..m])) / m</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Level and trend seeded from first two seasons. Seasonal factors normalised to sum to zero.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Parameter tuning</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px">Optimal α, β, γ found by minimising Sum of Squared Errors (SSE) via L-BFGS-B optimisation:</div>
+      <div class="formula">argmin Σ(y(t) − ŷ(t))²</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 2: MODEL COMPARISON ===== -->
+<div class="sec" id="s-models">
+  <div class="sh">SIDE-BY-SIDE MODEL PERFORMANCE</div>
+  <div class="g4">
+    <div class="kpi"><div class="kpi-l">BEST MODEL</div><div class="kpi-v" style="font-size:16px">Holt-Winters</div><div class="kpi-d up">MAPE 11.2%</div></div>
+    <div class="kpi"><div class="kpi-l">RUNNER UP</div><div class="kpi-v" style="font-size:16px">ARIMA</div><div class="kpi-d wr">MAPE 14.1%</div></div>
+    <div class="kpi"><div class="kpi-l">BASELINE</div><div class="kpi-v" style="font-size:16px">Moving Avg</div><div class="kpi-d dn">MAPE 18.6%</div></div>
+    <div class="kpi"><div class="kpi-l">ENSEMBLE</div><div class="kpi-v" style="font-size:16px">Weighted</div><div class="kpi-d up">MAPE 9.8%</div></div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ct"><i class="ti ti-chart-line il" aria-hidden="true"></i> Forecast vs actual — all models</div>
+      <div class="cs">14-day holdout evaluation period</div>
+      <div class="leg">
+        <span><span class="ld" style="background:#3266ad"></span>Actual</span>
+        <span><span class="ld" style="background:#1D9E75"></span>Holt-Winters</span>
+        <span><span class="ld" style="background:#BA7517"></span>ARIMA</span>
+        <span><span class="ld" style="background:#888780"></span>Moving Avg</span>
+      </div>
+      <div class="chw" style="height:200px"><canvas id="modelChart" role="img" aria-label="Line chart comparing actual demand against Holt-Winters, ARIMA and Moving Average forecasts over 14 days">Model comparison chart.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct"><i class="ti ti-chart-bar il" aria-hidden="true"></i> MAPE by SKU category</div>
+      <div class="cs">Mean absolute % error across product types — lower is better</div>
+      <div class="chw" style="height:200px"><canvas id="mapeBySkuChart" role="img" aria-label="Horizontal bar chart of MAPE values across product categories">MAPE by product category.</canvas></div>
+    </div>
+  </div>
+
+  <div class="sh">MODEL SELECTION GUIDE</div>
+  <div class="g3">
+    <div class="card" style="border-top:3px solid #3266ad;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div class="ct">Moving Average</div>
+      <div class="formula">MA(n) = Σy(t−i) / n</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">New products, &lt;30 days data. No trend or seasonality.</div>
+      <div style="font-size:11px;color:var(--color-text-secondary)">Use when: <span class="badge bb">history &lt; 30d</span></div>
+    </div>
+    <div class="card" style="border-top:3px solid #BA7517;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div class="ct">Linear Regression (trend)</div>
+      <div class="formula">ŷ = β₀ + β₁t</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">Steady upward/downward trend, no seasonality pattern.</div>
+      <div style="font-size:11px;color:var(--color-text-secondary)">Use when: <span class="badge bc">no seasonality</span></div>
+    </div>
+    <div class="card" style="border-top:3px solid #1D9E75;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div class="ct">Holt-Winters (Triple ETS)</div>
+      <div class="formula">Level + Trend + Seasonal</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">Seasonal goods, ≥2 full cycles of history. Best for most SKUs.</div>
+      <div style="font-size:11px;color:var(--color-text-secondary)">Use when: <span class="badge ba">strong seasonality</span></div>
+    </div>
+    <div class="card" style="border-top:3px solid #534AB7;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div class="ct">ARIMA / SARIMA</div>
+      <div class="formula">ARIMA(p,d,q)(P,D,Q)m</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">Stable stationary series, autocorrelation structure. Needs differencing.</div>
+      <div style="font-size:11px;color:var(--color-text-secondary)">Use when: <span class="badge bg">autocorrelated</span></div>
+    </div>
+    <div class="card" style="border-top:3px solid #E24B4A;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div class="ct">XGBoost / ML</div>
+      <div class="formula">External regressors + lag features</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">Promotions, weather, events affect demand. Needs feature engineering.</div>
+      <div style="font-size:11px;color:var(--color-text-secondary)">Use when: <span class="badge bd">external drivers</span></div>
+    </div>
+    <div class="card" style="border-top:3px solid #0F6E56;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div class="ct">Ensemble (weighted avg)</div>
+      <div class="formula">ŷ_e = Σ wᵢ·ŷᵢ / Σwᵢ</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">When no single model dominates. Weights inversely proportional to MAPE on validation set.</div>
+      <div style="font-size:11px;color:var(--color-text-secondary)">Best MAPE: <span class="badge ba">9.8%</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 3: ANOMALY DETECTION ===== -->
+<div class="sec" id="s-anomaly">
+  <div class="sh">LIVE ANOMALY DETECTOR</div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="cs">Adjust K-threshold — data points beyond K standard deviations from the rolling mean are flagged</div>
+    <div class="sl-row">
+      <label>K threshold (σ multiplier) <span style="font-weight:500;color:var(--color-text-primary)" id="kv">2.5</span>
+        <input type="range" min="1.0" max="4.0" step="0.1" value="2.5" id="kslider" oninput="runAnomaly()">
+      </label>
+      <label>Rolling window (days) <span style="font-weight:500;color:var(--color-text-primary)" id="wv">14</span>
+        <input type="range" min="7" max="30" step="1" value="14" id="wslider" oninput="runAnomaly()">
+      </label>
+    </div>
+    <div class="g4" style="margin-bottom:12px">
+      <div class="kpi"><div class="kpi-l">ANOMALIES FOUND</div><div class="kpi-v" id="anomCnt">—</div></div>
+      <div class="kpi"><div class="kpi-l">ROLLING MEAN</div><div class="kpi-v" id="anomMean">—</div></div>
+      <div class="kpi"><div class="kpi-l">STD DEV (σ)</div><div class="kpi-v" id="anomSd">—</div></div>
+      <div class="kpi"><div class="kpi-l">UPPER BOUND</div><div class="kpi-v" id="anomUb">—</div></div>
+    </div>
+    <div class="leg">
+      <span><span class="ld" style="background:#3266ad"></span>Daily demand</span>
+      <span><span class="ld" style="background:#888780;border:1px dashed #888780;background:transparent"></span>Rolling mean</span>
+      <span><span class="ld" style="background:rgba(50,102,173,0.15)"></span>±K·σ band</span>
+      <span><span class="ld" style="background:#E24B4A;border-radius:50%"></span>Anomaly flagged</span>
+    </div>
+    <div class="chw" style="height:210px"><canvas id="anomChart" role="img" aria-label="Line chart showing daily demand with anomaly detection bands and flagged outlier points">Anomaly detection chart.</canvas></div>
+  </div>
+
+  <div class="sh">ANOMALY FORMULA</div>
+  <div class="g2">
+    <div class="card">
+      <div class="ct">Z-score anomaly condition</div>
+      <div class="formula">Flag if: |x(t) − μ| &gt; K · σ</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:6px">μ = rolling 30-day mean demand. σ = rolling standard deviation. K = sensitivity (default 2.5). Values beyond K·σ from mean are flagged for manual review.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Anomaly trigger categories</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">
+        <div style="margin-bottom:6px"><span class="badge bd">Demand spike</span> Sudden high sales — possible data entry error or promotional event not recorded</div>
+        <div style="margin-bottom:6px"><span class="badge bc">Demand drop</span> Zero or near-zero demand for normally active SKU — possible system outage or receiving issue</div>
+        <div><span class="badge bb">Large adjustment</span> Manual stock adjustment &gt; 3σ — requires supervisor approval in workflow</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh">ANOMALY LOG TABLE</div>
+  <div class="card">
+    <table class="tbl">
+      <thead><tr><th style="width:15%">Date</th><th style="width:22%">SKU</th><th style="width:12%">Demand</th><th style="width:12%">Mean</th><th style="width:12%">Z-score</th><th style="width:14%">Type</th><th style="width:13%">Status</th></tr></thead>
+      <tbody>
+        <tr><td>May 24</td><td>LAPTOP-DEL-8GB</td><td>42</td><td>14.2</td><td>3.8</td><td><span class="badge bd">Spike</span></td><td><span class="badge bc">Review</span></td></tr>
+        <tr><td>May 21</td><td>MOUSE-WL-BLK</td><td>0</td><td>18.6</td><td>−3.1</td><td><span class="badge bc">Drop</span></td><td><span class="badge ba">Resolved</span></td></tr>
+        <tr><td>May 18</td><td>KEYBOARD-MX</td><td>38</td><td>11.4</td><td>2.9</td><td><span class="badge bd">Spike</span></td><td><span class="badge ba">Confirmed</span></td></tr>
+        <tr><td>May 15</td><td>MONITOR-27-4K</td><td>1</td><td>9.8</td><td>−2.7</td><td><span class="badge bc">Drop</span></td><td><span class="badge ba">Resolved</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TAB 4: REORDER INTELLIGENCE ===== -->
+<div class="sec" id="s-reorder">
+  <div class="sh">SMART REORDER CALCULATOR</div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="sl-row">
+      <label>Avg daily sales <span style="font-weight:500;color:var(--color-text-primary)" id="ads">12</span>
+        <input type="range" min="1" max="50" step="1" value="12" id="avgS" oninput="calcRO()">
+      </label>
+      <label>Max daily sales <span style="font-weight:500;color:var(--color-text-primary)" id="mds">20</span>
+        <input type="range" min="1" max="80" step="1" value="20" id="maxS" oninput="calcRO()">
+      </label>
+      <label>Avg lead time (days) <span style="font-weight:500;color:var(--color-text-primary)" id="alt">7</span>
+        <input type="range" min="1" max="30" step="1" value="7" id="avgLT" oninput="calcRO()">
+      </label>
+      <label>Max lead time (days) <span style="font-weight:500;color:var(--color-text-primary)" id="mlt">10</span>
+        <input type="range" min="1" max="45" step="1" value="10" id="maxLT" oninput="calcRO()">
+      </label>
+      <label>Service level % <span style="font-weight:500;color:var(--color-text-primary)" id="slv">95</span>%
+        <input type="range" min="80" max="99" step="1" value="95" id="slPct" oninput="calcRO()">
+      </label>
+    </div>
+    <div class="g4">
+      <div class="kpi"><div class="kpi-l">SAFETY STOCK</div><div class="kpi-v" id="ssOut">—</div></div>
+      <div class="kpi"><div class="kpi-l">REORDER POINT</div><div class="kpi-v" id="ropOut">—</div></div>
+      <div class="kpi"><div class="kpi-l">MAX STOCK LEVEL</div><div class="kpi-v" id="maxOut">—</div></div>
+      <div class="kpi"><div class="kpi-l">DAYS OF COVER</div><div class="kpi-v" id="docOut">—</div></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ct"><i class="ti ti-chart-bar il" aria-hidden="true"></i> Reorder suggestions by urgency</div>
+      <div class="chw" style="height:190px"><canvas id="roChart" role="img" aria-label="Horizontal bar chart showing current stock vs reorder point for top SKUs coloured by urgency">Reorder urgency chart.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct"><i class="ti ti-calendar il" aria-hidden="true"></i> Lead time distribution by supplier</div>
+      <div class="chw" style="height:190px"><canvas id="ltChart" role="img" aria-label="Bar chart showing lead time distribution across suppliers">Supplier lead time distribution.</canvas></div>
+    </div>
+  </div>
+
+  <div class="sh">REORDER FORMULAS</div>
+  <div class="g3">
+    <div class="card">
+      <div class="ct">Safety stock (Z-score method)</div>
+      <div class="formula">SS = Z × σ_d × √(Lead Time)</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">σ_d = std dev of daily demand. Z = 1.65 at 95% service level.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Safety stock (min-max method)</div>
+      <div class="formula">SS = (MaxDS × MaxLT) − (AvgDS × AvgLT)</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">Conservative approach. Used as cross-check against Z-score method.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Reorder point</div>
+      <div class="formula">ROP = (AvgDS × AvgLT) + SS</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">Triggers a purchase order when stock falls to this level. Accounts for demand during lead time.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Economic Order Quantity</div>
+      <div class="formula">EOQ = √(2 × D × S / H)</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">D = annual demand, S = order cost, H = holding cost per unit per year.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Days of inventory cover</div>
+      <div class="formula">DoC = Current Stock / Avg Daily Sales</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">How many days before stockout at current consumption rate, ignoring incoming orders.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Urgency classification</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">
+        <div style="margin-bottom:5px"><span class="dot" style="background:#E24B4A"></span><span class="badge bd" style="margin-right:4px">Critical</span> stock &lt; SS</div>
+        <div style="margin-bottom:5px"><span class="dot" style="background:#BA7517"></span><span class="badge bc" style="margin-right:4px">Warning</span> SS ≤ stock &lt; ROP</div>
+        <div><span class="dot" style="background:#1D9E75"></span><span class="badge ba" style="margin-right:4px">Optimal</span> stock ≥ ROP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 5: ACCURACY METRICS ===== -->
+<div class="sec" id="s-accuracy">
+  <div class="sh">FORECAST ERROR METRIC DEFINITIONS</div>
+  <div class="g3">
+    <div class="card">
+      <div class="ct">MAPE — Mean Absolute % Error</div>
+      <div class="formula">MAPE = (1/n) Σ |y−ŷ| / y × 100</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">Most interpretable. Expressed as %. Problem: undefined when y=0. Target: &lt;15% for IMS.</div>
+      <div style="margin-top:8px"><span class="badge ba">&lt;10% Excellent</span> <span class="badge bb">10–15% Good</span> <span class="badge bd">&gt;20% Poor</span></div>
+    </div>
+    <div class="card">
+      <div class="ct">MAE — Mean Absolute Error</div>
+      <div class="formula">MAE = (1/n) Σ |y(t) − ŷ(t)|</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">In same units as demand (units/day). Not sensitive to outliers. Good for comparing models on same scale.</div>
+    </div>
+    <div class="card">
+      <div class="ct">RMSE — Root Mean Squared Error</div>
+      <div class="formula">RMSE = √( (1/n) Σ (y−ŷ)² )</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">Penalises large errors more than MAE. Good for safety-critical inventory where spikes are costly.</div>
+    </div>
+    <div class="card">
+      <div class="ct">WAPE — Weighted Absolute % Error</div>
+      <div class="formula">WAPE = Σ|y−ŷ| / Σy × 100</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">Handles zero-demand periods better than MAPE. Used in retail and distribution at aggregate level.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Bias — Mean Error</div>
+      <div class="formula">Bias = (1/n) Σ (ŷ(t) − y(t))</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">Positive bias = systematic over-forecast (overstock risk). Negative = under-forecast (stockout risk). Target: near 0.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Tracking signal</div>
+      <div class="formula">TS = Σ(y−ŷ) / MAD</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:5px">MAD = Mean Absolute Deviation. |TS| &gt; 4 signals systematic forecast bias needing model recalibration.</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ct"><i class="ti ti-chart-line il" aria-hidden="true"></i> MAPE trend — 12-week rolling</div>
+      <div class="cs">Weekly forecast accuracy for top-selling category</div>
+      <div class="chw" style="height:180px"><canvas id="mapeChart" role="img" aria-label="Line chart showing MAPE accuracy trend declining from 22% to 11% over 12 weeks">MAPE trend over 12 weeks.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct"><i class="ti ti-chart-bar il" aria-hidden="true"></i> Error distribution (residuals)</div>
+      <div class="cs">Forecast errors should be centred at 0 — asymmetry reveals bias</div>
+      <div class="chw" style="height:180px"><canvas id="residChart" role="img" aria-label="Bar chart showing distribution of forecast residuals centred near zero">Residual distribution histogram.</canvas></div>
+    </div>
+  </div>
+
+  <div class="sh">ACCURACY BENCHMARKS BY SKU TYPE</div>
+  <div class="card">
+    <table class="tbl">
+      <thead><tr><th style="width:20%">SKU category</th><th style="width:14%">Model</th><th style="width:12%">MAPE</th><th style="width:12%">MAE</th><th style="width:12%">Bias</th><th style="width:15%">Rating</th><th style="width:15%">Action</th></tr></thead>
+      <tbody>
+        <tr><td>Laptops</td><td>Holt-Winters</td><td>11.2%</td><td>1.8</td><td>+0.2</td><td><span class="badge ba">Excellent</span></td><td><span class="badge bg">No action</span></td></tr>
+        <tr><td>Peripherals</td><td>Holt-Winters</td><td>13.4%</td><td>3.2</td><td>−0.8</td><td><span class="badge bb">Good</span></td><td><span class="badge bg">Monitor</span></td></tr>
+        <tr><td>Cables</td><td>Moving Avg</td><td>18.6%</td><td>4.1</td><td>+1.4</td><td><span class="badge bc">Fair</span></td><td><span class="badge bc">Retune</span></td></tr>
+        <tr><td>New SKUs</td><td>Moving Avg</td><td>24.1%</td><td>5.8</td><td>−2.1</td><td><span class="badge bd">Poor</span></td><td><span class="badge bd">Manual</span></td></tr>
+        <tr><td>Ensemble</td><td>Weighted avg</td><td>9.8%</td><td>1.4</td><td>+0.1</td><td><span class="badge ba">Excellent</span></td><td><span class="badge bg">No action</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TAB 6: PIPELINE ===== -->
+<div class="sec" id="s-pipeline">
+  <div class="sh">FORECASTING PIPELINE — END TO END</div>
+  <div class="g3" style="margin-bottom:14px">
+    <div class="card" style="border-top:3px solid #3266ad;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div style="font-size:11px;color:#3266ad;font-weight:500;margin-bottom:4px">STEP 1 — Data ingestion</div>
+      <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Raw demand extraction</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Pull <code>STOCK_OUT + SALE_DISPATCH</code> movements from <code>inventory_movements</code> table. Exclude cancellations, returns, damages.</div>
+    </div>
+    <div class="card" style="border-top:3px solid #BA7517;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div style="font-size:11px;color:#BA7517;font-weight:500;margin-bottom:4px">STEP 2 — Preprocessing</div>
+      <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Clean and aggregate</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Aggregate to daily totals per SKU × warehouse. Fill zero-demand days. Cap outliers via IQR (1.5× IQR rule). Normalise.</div>
+    </div>
+    <div class="card" style="border-top:3px solid #1D9E75;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div style="font-size:11px;color:#1D9E75;font-weight:500;margin-bottom:4px">STEP 3 — Model selection</div>
+      <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Auto-fit per SKU</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Evaluate history length, CoV, seasonality score (ACF). Select best model from MA → Regression → HW → ARIMA → Ensemble.</div>
+    </div>
+    <div class="card" style="border-top:3px solid #534AB7;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div style="font-size:11px;color:#534AB7;font-weight:500;margin-bottom:4px">STEP 4 — Training</div>
+      <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Fit on 80% history</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Train on 80% of historical data. Validate on 20% holdout. Optimise α, β, γ via SSE minimisation (L-BFGS-B).</div>
+    </div>
+    <div class="card" style="border-top:3px solid #E24B4A;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div style="font-size:11px;color:#E24B4A;font-weight:500;margin-bottom:4px">STEP 5 — Forecast generation</div>
+      <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">7 / 14 / 30 / 90 day</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Generate point forecasts + 80% / 95% confidence intervals via Monte Carlo simulation (1000 draws). Store in <code>forecasts</code> table.</div>
+    </div>
+    <div class="card" style="border-top:3px solid #0F6E56;border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)">
+      <div style="font-size:11px;color:#0F6E56;font-weight:500;margin-bottom:4px">STEP 6 — Reorder trigger</div>
+      <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Auto PO suggestion</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Compute SS, ROP, EOQ per SKU. Compare current stock vs ROP. Classify urgency. Surface in reorder dashboard. Trigger PO draft.</div>
+    </div>
+  </div>
+
+  <div class="sh">CRON SCHEDULE</div>
+  <div class="g2">
+    <div class="card">
+      <div class="ct"><i class="ti ti-clock il" aria-hidden="true"></i> Scheduled jobs</div>
+      <table class="tbl">
+        <thead><tr><th style="width:35%">Job</th><th style="width:25%">Schedule</th><th style="width:40%">Action</th></tr></thead>
+        <tbody>
+          <tr><td>Full forecast recompute</td><td>Daily 2:00 AM IST</td><td>All active SKUs × warehouses</td></tr>
+          <tr><td>Anomaly detection</td><td>Every 4 hours</td><td>Z-score check on recent demand</td></tr>
+          <tr><td>Reorder alerts</td><td>Every 6 hours</td><td>Stock vs ROP comparison</td></tr>
+          <tr><td>Expiry check</td><td>Daily 6:00 AM IST</td><td>Flag batches expiring &lt;90d</td></tr>
+          <tr><td>Accuracy report</td><td>Weekly Sunday</td><td>MAPE / RMSE per SKU report</td></tr>
+          <tr><td>Model retrain</td><td>Monthly</td><td>Re-optimise α, β, γ with new data</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="ct"><i class="ti ti-database il" aria-hidden="true"></i> Cache strategy</div>
+      <table class="tbl">
+        <thead><tr><th style="width:45%">Cache key</th><th style="width:25%">TTL</th><th style="width:30%">Invalidation</th></tr></thead>
+        <tbody>
+          <tr><td><code>forecast:{skuId}</code></td><td>24 hours</td><td>On recompute job</td></tr>
+          <tr><td><code>reorder:suggestions</code></td><td>6 hours</td><td>On stock movement</td></tr>
+          <tr><td><code>kpi:dashboard</code></td><td>5 minutes</td><td>Time-based expiry</td></tr>
+          <tr><td><code>anomaly:flags</code></td><td>4 hours</td><td>On detection run</td></tr>
+          <tr><td><code>accuracy:mape:{sku}</code></td><td>7 days</td><td>On weekly report</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function sw(id,el){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const gc = isDark?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.07)';
+const tc = isDark?'#9c9a92':'#73726c';
+const base = {responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}}};
+
+const rawDemand = [38,42,35,52,58,44,39,48,55,41,36,62,68,45,38,72,65,50,44,78,82,58,46,88,75,52,40,90,84,60,48,95,88,62,50,100,92,65,52,105,98,68,55,110,102,70,58];
+
+function hwModel(data, alpha, beta, gamma, m, horizon){
+  let l=data.slice(0,m).reduce((a,b)=>a+b,0)/m;
+  let b=(data.slice(m,2*m).reduce((a,b)=>a+b,0)/m - l)/m;
+  let s=data.slice(0,m).map(v=>v-l);
+  const fitted=[];
+  for(let t=0;t<data.length;t++){
+    const si=t>=m?s[t-m]:s[((t%m)+m)%m];
+    const l_prev=l, b_prev=b;
+    l=alpha*(data[t]-si)+(1-alpha)*(l_prev+b_prev);
+    b=beta*(l-l_prev)+(1-beta)*b_prev;
+    const si_idx=t-m<0?t:t-m;
+    const new_s=gamma*(data[t]-l_prev-b_prev)+(1-gamma)*(s[si_idx%m]||0);
+    s.push(new_s);
+    fitted.push(l_prev+b_prev+si);
+  }
+  const fcst=[];
+  for(let h=1;h<=horizon;h++) fcst.push(l+h*b+s[s.length-m+(h-1)%m]);
+  return {fitted,fcst,level:l,trend:b};
+}
+
+let hwRef;
+function runHW(){
+  const alpha=+document.getElementById('alpha').value;
+  const beta=+document.getElementById('beta').value;
+  const gamma=+document.getElementById('gamma').value;
+  const hor=+document.getElementById('horizon').value;
+  document.getElementById('av').textContent=alpha.toFixed(2);
+  document.getElementById('bv').textContent=beta.toFixed(2);
+  document.getElementById('gv').textContent=gamma.toFixed(2);
+  document.getElementById('hv').textContent=hor;
+  const {fitted,fcst,trend} = hwModel(rawDemand,alpha,beta,gamma,7,hor);
+  const mape = rawDemand.reduce((s,v,i)=>s+Math.abs(v-fitted[i])/v,0)/rawDemand.length*100;
+  const rmse = Math.sqrt(rawDemand.reduce((s,v,i)=>s+(v-fitted[i])**2,0)/rawDemand.length);
+  document.getElementById('mapeOut').textContent=mape.toFixed(1)+'%';
+  document.getElementById('rmseOut').textContent=rmse.toFixed(1);
+  document.getElementById('fcTot').textContent=Math.round(fcst.reduce((a,b)=>a+b,0));
+  document.getElementById('trendOut').textContent=(trend>=0?'+':'')+trend.toFixed(2)+'/d';
+  const allLabels=[...rawDemand.map((_,i)=>`D${i+1}`),...fcst.map((_,i)=>`F${i+1}`)];
+  const ci=fcst.map((v,i)=>v*0.18+2+i*0.3);
+  if(hwRef){
+    hwRef.data.labels=allLabels;
+    hwRef.data.datasets[0].data=[...rawDemand,...Array(hor).fill(null)];
+    hwRef.data.datasets[1].data=[...fitted,...fcst];
+    hwRef.data.datasets[2].data=[...Array(rawDemand.length).fill(null),...fcst.map((v,i)=>Math.round(v+ci[i]))];
+    hwRef.data.datasets[3].data=[...Array(rawDemand.length).fill(null),...fcst.map((v,i)=>Math.round(v-ci[i]))];
+    hwRef.update();
+  }
+}
+
+hwRef=new Chart(document.getElementById('hwChart'),{
+  type:'line',
+  data:{labels:[],datasets:[
+    {label:'Actual',data:[],borderColor:'#3266ad',borderWidth:2,pointRadius:0,tension:.3,fill:false},
+    {label:'Forecast',data:[],borderColor:'#BA7517',borderWidth:2,pointRadius:0,tension:.3,borderDash:[6,3],fill:false},
+    {label:'CI upper',data:[],borderColor:'transparent',backgroundColor:'rgba(50,102,173,0.14)',fill:'-1',tension:.3,pointRadius:0},
+    {label:'CI lower',data:[],borderColor:'transparent',backgroundColor:'transparent',fill:false,tension:.3,pointRadius:0}
+  ]},
+  options:{...base,scales:{x:{...base.scales.x,ticks:{...base.scales.x.ticks,maxTicksLimit:12}},y:base.scales.y}}
+});
+runHW();
+
+new Chart(document.getElementById('modelChart'),{
+  type:'line',
+  data:{
+    labels:Array.from({length:14},(_,i)=>`D${i+1}`),
+    datasets:[
+      {label:'Actual',data:[72,68,75,80,77,82,86,84,88,92,90,95,98,100],borderColor:'#3266ad',borderWidth:2.5,pointRadius:3,tension:.3,fill:false},
+      {label:'Holt-Winters',data:[70,66,74,79,75,80,85,83,86,91,89,93,96,99],borderColor:'#1D9E75',borderWidth:2,pointRadius:0,tension:.3,fill:false,borderDash:[4,2]},
+      {label:'ARIMA',data:[68,64,71,77,72,78,82,80,84,88,86,90,93,96],borderColor:'#BA7517',borderWidth:2,pointRadius:0,tension:.3,fill:false,borderDash:[6,3]},
+      {label:'Moving Avg',data:[65,63,68,74,70,74,79,77,80,84,82,87,90,92],borderColor:'#888780',borderWidth:1.5,pointRadius:0,tension:.3,fill:false,borderDash:[2,3]}
+    ]
+  },
+  options:base
+});
+
+new Chart(document.getElementById('mapeBySkuChart'),{
+  type:'bar',
+  data:{
+    labels:['Laptops','Monitors','Keyboards','Mice','Cables','New SKUs'],
+    datasets:[{label:'MAPE %',data:[11.2,13.8,15.4,12.6,18.9,24.1],
+      backgroundColor:d=>d.raw<13?'#1D9E75':d.raw<17?'#BA7517':'#E24B4A',
+      borderRadius:4,barPercentage:.75}]
+  },
+  options:{...base,indexAxis:'y',scales:{y:{...base.scales.y,grid:{display:false}},x:{...base.scales.x,min:0,max:30,ticks:{...base.scales.x.ticks,callback:v=>v+'%'}}}}
+});
+
+const anomBase = Array.from({length:45},(_,i)=>Math.round(40+10*Math.sin(i/5)+Math.random()*8));
+anomBase[12]=92; anomBase[28]=8; anomBase[38]=88;
+let anomRef;
+function runAnomaly(){
+  const K=+document.getElementById('kslider').value;
+  const W=+document.getElementById('wslider').value;
+  document.getElementById('kv').textContent=K.toFixed(1);
+  document.getElementById('wv').textContent=W;
+  const mean=anomBase.slice(-W).reduce((a,b)=>a+b,0)/W;
+  const sd=Math.sqrt(anomBase.slice(-W).reduce((s,v)=>s+(v-mean)**2,0)/W);
+  const ub=mean+K*sd, lb=mean-K*sd;
+  const flags=anomBase.filter(v=>Math.abs(v-mean)>K*sd).length;
+  document.getElementById('anomCnt').textContent=flags;
+  document.getElementById('anomMean').textContent=Math.round(mean);
+  document.getElementById('anomSd').textContent=sd.toFixed(1);
+  document.getElementById('anomUb').textContent=Math.round(ub);
+  const pts=anomBase.map(v=>Math.abs(v-mean)>K*sd?v:null);
+  if(anomRef){
+    anomRef.data.datasets[1].data=Array(anomBase.length).fill(Math.round(mean));
+    anomRef.data.datasets[2].data=Array(anomBase.length).fill(Math.round(ub));
+    anomRef.data.datasets[3].data=Array(anomBase.length).fill(Math.round(lb));
+    anomRef.data.datasets[4].data=pts;
+    anomRef.update();
+  }
+}
+
+anomRef=new Chart(document.getElementById('anomChart'),{
+  type:'line',
+  data:{
+    labels:anomBase.map((_,i)=>`D${i+1}`),
+    datasets:[
+      {label:'Demand',data:anomBase,borderColor:'#3266ad',borderWidth:1.8,pointRadius:0,tension:.3,fill:false},
+      {label:'Mean',data:[],borderColor:'#888780',borderWidth:1,borderDash:[5,3],pointRadius:0,fill:false},
+      {label:'Upper',data:[],borderColor:'rgba(50,102,173,0.25)',backgroundColor:'rgba(50,102,173,0.10)',fill:'-1',pointRadius:0},
+      {label:'Lower',data:[],borderColor:'rgba(50,102,173,0.25)',backgroundColor:'transparent',fill:false,pointRadius:0},
+      {label:'Anomaly',data:[],borderColor:'transparent',backgroundColor:'#E24B4A',pointRadius:6,pointStyle:'circle',type:'scatter',showLine:false}
+    ]
+  },
+  options:{...base,scales:{x:{...base.scales.x,ticks:{...base.scales.x.ticks,maxTicksLimit:12}},y:base.scales.y}}
+});
+runAnomaly();
+
+const zTable={80:1.28,85:1.44,90:1.28,92:1.41,95:1.65,96:1.75,97:1.88,98:2.05,99:2.33};
+function calcRO(){
+  const ads=+document.getElementById('avgS').value;
+  const mds=+document.getElementById('maxS').value;
+  const alt=+document.getElementById('avgLT').value;
+  const mlt=+document.getElementById('maxLT').value;
+  const sl=+document.getElementById('slPct').value;
+  document.getElementById('ads').textContent=ads;
+  document.getElementById('mds').textContent=Math.max(ads,mds);
+  document.getElementById('alt').textContent=alt;
+  document.getElementById('mlt').textContent=Math.max(alt,mlt);
+  document.getElementById('slv').textContent=sl;
+  const z=zTable[sl]||1.65;
+  const sd=Math.max(1,(mds-ads)/2);
+  const ss=Math.round(z*sd*Math.sqrt(alt));
+  const rop=Math.round(ads*alt+ss);
+  const maxS=rop+Math.round(Math.sqrt(2*ads*365*100/5));
+  const doc=(rop/ads).toFixed(1);
+  document.getElementById('ssOut').textContent=ss+' units';
+  document.getElementById('ropOut').textContent=rop+' units';
+  document.getElementById('maxOut').textContent=maxS+' units';
+  document.getElementById('docOut').textContent=doc+' days';
+}
+calcRO();
+
+new Chart(document.getElementById('roChart'),{
+  type:'bar',
+  data:{
+    labels:['LAPTOP-DEL','MOUSE-WL','KEYBD-MX','MONIT-24','HDSET-BT','USB-HUB'],
+    datasets:[
+      {label:'Current stock',data:[28,145,62,18,80,4],backgroundColor:['#3266ad','#1D9E75','#3266ad','#E24B4A','#1D9E75','#E24B4A'],borderRadius:4,barPercentage:.8,categoryPercentage:.65},
+      {label:'ROP',data:[15,50,30,20,40,10],backgroundColor:'rgba(186,117,23,0.5)',borderRadius:4,barPercentage:.8,categoryPercentage:.65}
+    ]
+  },
+  options:{...base,indexAxis:'y',scales:{y:{...base.scales.y,grid:{display:false}},x:base.scales.x}}
+});
+
+new Chart(document.getElementById('ltChart'),{
+  type:'bar',
+  data:{
+    labels:['Dell India','Samsung','Sony','Logitech','LG Elec'],
+    datasets:[{label:'Avg LT',data:[7,9,6,12,8],backgroundColor:'#3266ad',borderRadius:4,barPercentage:.7},
+      {label:'Max LT',data:[10,14,9,18,12],backgroundColor:'rgba(50,102,173,0.28)',borderRadius:4,barPercentage:.7}]
+  },
+  options:{...base,scales:{x:base.scales.x,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:v=>v+'d'}}}}
+});
+
+new Chart(document.getElementById('mapeChart'),{
+  type:'line',
+  data:{
+    labels:Array.from({length:12},(_,i)=>`W${i+1}`),
+    datasets:[{label:'MAPE %',data:[22,20,19,18,17,16,15,14,13,13,12,11],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.1)',fill:true,tension:.4,pointRadius:3,borderWidth:2}]
+  },
+  options:{...base,scales:{x:base.scales.x,y:{...base.scales.y,min:8,max:25,ticks:{...base.scales.y.ticks,callback:v=>v+'%'}}}}
+});
+
+const resid=[-8,-5,-3,-6,-2,0,1,3,2,4,5,6,7,8,6,5,4,3,2,1,0,-1,-2,-1,0,1,2,1,0,-1];
+new Chart(document.getElementById('residChart'),{
+  type:'bar',
+  data:{
+    labels:resid.map((_,i)=>`${i+1}`),
+    datasets:[{label:'Residual',data:resid,backgroundColor:resid.map(v=>v>0?'rgba(50,102,173,0.7)':'rgba(226,75,74,0.7)'),borderRadius:2,barPercentage:.9}]
+  },
+  options:{...base,scales:{x:{...base.scales.x,display:false},y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:v=>v>0?'+'+v:v}}}}
+});
+</script>

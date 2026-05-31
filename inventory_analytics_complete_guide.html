@@ -1,0 +1,641 @@
+
+<style>
+  h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-sans)}
+  .page{padding:20px 0 32px}
+  .hero{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:18px 22px 14px;margin-bottom:22px}
+  .hero-title{font-size:17px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+  .hero-sub{font-size:13px;color:var(--color-text-secondary)}
+  .tabs{display:flex;gap:0;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:20px;overflow-x:auto}
+  .tab{padding:9px 14px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s}
+  .tab.active{color:var(--color-text-primary);border-bottom:2px solid var(--color-text-primary);font-weight:500}
+  .tab:hover:not(.active){color:var(--color-text-primary)}
+  .section{display:none}
+  .section.active{display:block}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+  @media(max-width:640px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+  .card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px}
+  .kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px 16px}
+  .kpi-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:5px;font-weight:500;letter-spacing:.03em}
+  .kpi-val{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+  .kpi-delta{font-size:12px;margin-top:3px}
+  .up{color:var(--color-text-success)}.down{color:var(--color-text-danger)}.warn{color:var(--color-text-warning)}
+  .card-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+  .card-sub{font-size:12px;color:var(--color-text-secondary);margin-bottom:12px;margin-top:-8px}
+  .badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:500;gap:4px}
+  .badge-a{background:var(--color-background-success);color:var(--color-text-success)}
+  .badge-b{background:var(--color-background-info);color:var(--color-text-info)}
+  .badge-c{background:var(--color-background-warning);color:var(--color-text-warning)}
+  .badge-d{background:var(--color-background-danger);color:var(--color-text-danger)}
+  .badge-gray{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+  .ch-wrap{position:relative;width:100%}
+  .legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--color-text-secondary);margin-bottom:8px}
+  .leg-dot{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:4px}
+  .tbl{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl th{text-align:left;padding:7px 10px;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px;letter-spacing:.04em}
+  .tbl td{padding:8px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl tr:hover td{background:var(--color-background-secondary)}
+  .progress-bg{background:var(--color-background-secondary);border-radius:4px;height:6px;width:100%}
+  .progress-fill{height:6px;border-radius:4px}
+  .section-head{font-size:12px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;margin:18px 0 10px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .matrix-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .m-cell{padding:12px;border-radius:var(--border-radius-md);font-size:12px;text-align:center;border:0.5px solid transparent}
+  .formula{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary);border:0.5px solid var(--color-border-tertiary);margin:8px 0}
+  .pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:500}
+  .dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+  .hmap-row{display:flex;gap:3px;margin-bottom:3px;align-items:center}
+  .hmap-cell{flex:1;height:28px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500}
+  .sl{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  select{font-size:12px;padding:4px 8px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer}
+  .inline-icon{font-size:15px;vertical-align:-2px}
+</style>
+
+<h2 class="sr-only">Inventory management analytics reference — charts, matrices and KPIs across five categories</h2>
+
+<div class="page">
+<div class="hero">
+  <div class="hero-title"><i class="ti ti-chart-bar inline-icon" aria-hidden="true"></i> Inventory Analytics Reference</div>
+  <div class="hero-sub">All key metrics, matrices, and charts used in enterprise inventory management</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="show('kpis',this)">Core KPIs</div>
+  <div class="tab" onclick="show('demand',this)">Demand & Forecast</div>
+  <div class="tab" onclick="show('abc',this)">ABC / XYZ Analysis</div>
+  <div class="tab" onclick="show('reorder',this)">Reorder Metrics</div>
+  <div class="tab" onclick="show('financial',this)">Financial Matrices</div>
+  <div class="tab" onclick="show('ops',this)">Operational Charts</div>
+</div>
+
+<!-- ======== TAB 1: CORE KPIs ======== -->
+<div class="section active" id="s-kpis">
+  <div class="grid4">
+    <div class="kpi"><div class="kpi-label">INVENTORY TURNOVER</div><div class="kpi-val">8.4×</div><div class="kpi-delta up"><i class="ti ti-trending-up" aria-hidden="true"></i> +1.2 vs last period</div></div>
+    <div class="kpi"><div class="kpi-label">DAYS INVENTORY OUTSTANDING</div><div class="kpi-val">43.4 d</div><div class="kpi-delta up"><i class="ti ti-trending-down" aria-hidden="true"></i> -3 days (better)</div></div>
+    <div class="kpi"><div class="kpi-label">STOCKOUT RATE</div><div class="kpi-val">1.8%</div><div class="kpi-delta up"><i class="ti ti-trending-down" aria-hidden="true"></i> -0.4% vs last qtr</div></div>
+    <div class="kpi"><div class="kpi-label">FILL RATE</div><div class="kpi-val">97.3%</div><div class="kpi-delta up"><i class="ti ti-trending-up" aria-hidden="true"></i> +0.8% vs last qtr</div></div>
+  </div>
+  <div class="grid4">
+    <div class="kpi"><div class="kpi-label">CARRYING COST %</div><div class="kpi-val">22.4%</div><div class="kpi-delta warn"><i class="ti ti-alert-triangle" aria-hidden="true"></i> 2% above target</div></div>
+    <div class="kpi"><div class="kpi-label">GROSS MARGIN RETURN</div><div class="kpi-val">₹3.12</div><div class="kpi-delta up"><i class="ti ti-trending-up" aria-hidden="true"></i> per ₹1 invested</div></div>
+    <div class="kpi"><div class="kpi-label">ORDER CYCLE TIME</div><div class="kpi-val">4.2 d</div><div class="kpi-delta up"><i class="ti ti-clock" aria-hidden="true"></i> avg supplier lead</div></div>
+    <div class="kpi"><div class="kpi-label">DEAD STOCK RATIO</div><div class="kpi-val">3.1%</div><div class="kpi-delta down"><i class="ti ti-trending-up" aria-hidden="true"></i> +0.6% (worsening)</div></div>
+  </div>
+
+  <div class="section-head">FORMULA REFERENCE</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calculator inline-icon" aria-hidden="true"></i> Inventory Turnover</div>
+      <div class="formula">Turnover = COGS / Avg Inventory Value</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Higher = faster-moving stock. Benchmark: 6–12× for retail.</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calculator inline-icon" aria-hidden="true"></i> Days Inventory Outstanding (DIO)</div>
+      <div class="formula">DIO = (Avg Inventory / COGS) × 365</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Days stock sits before being sold. Lower is better.</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calculator inline-icon" aria-hidden="true"></i> GMROI — Gross Margin Return on Investment</div>
+      <div class="formula">GMROI = Gross Profit / Avg Inventory Cost</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Measures profitability per ₹ of inventory held. Target ≥ 2.</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calculator inline-icon" aria-hidden="true"></i> Service Level / Fill Rate</div>
+      <div class="formula">Fill Rate = Orders Filled / Total Orders × 100</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Percentage of orders fulfilled without backorder. Target 95–99%.</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calculator inline-icon" aria-hidden="true"></i> Carrying Cost Ratio</div>
+      <div class="formula">Carrying Cost % = (Total Holding Cost / Avg Inventory Value) × 100</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Includes storage, insurance, obsolescence, capital cost. Benchmark: 20–30%.</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calculator inline-icon" aria-hidden="true"></i> Stockout Rate</div>
+      <div class="formula">Stockout Rate = Stockout Events / Total Demand Events × 100</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Each % of stockout can translate to ~1–3% lost revenue.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== TAB 2: DEMAND & FORECAST ======== -->
+<div class="section" id="s-demand">
+  <div class="section-head">DEMAND FORECASTING CHARTS</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-line inline-icon" aria-hidden="true"></i> Demand Forecast vs Actuals</div>
+      <div class="card-sub">30-day rolling window — actual vs Holt-Winters prediction with confidence band</div>
+      <div class="ch-wrap" style="height:180px"><canvas id="fc1" role="img" aria-label="Line chart comparing actual demand (solid) versus forecasted demand (dashed) with 80% confidence interval shading">Actual and forecast demand over 30 days.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-area inline-icon" aria-hidden="true"></i> Seasonal Demand Pattern</div>
+      <div class="card-sub">Monthly demand index — seasonality multipliers by month</div>
+      <div class="ch-wrap" style="height:180px"><canvas id="fc2" role="img" aria-label="Bar chart showing seasonal demand index by month from January to December">Monthly demand seasonality index.</canvas></div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-histogram inline-icon" aria-hidden="true"></i> Demand Distribution (histogram)</div>
+      <div class="card-sub">Daily demand frequency — used to calibrate safety stock Z-score</div>
+      <div class="ch-wrap" style="height:180px"><canvas id="fc3" role="img" aria-label="Histogram of daily demand frequency showing near-normal distribution">Demand frequency histogram.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-line inline-icon" aria-hidden="true"></i> Forecast Accuracy (MAPE Trend)</div>
+      <div class="card-sub">Mean Absolute Percentage Error over rolling 12 weeks</div>
+      <div class="ch-wrap" style="height:180px"><canvas id="fc4" role="img" aria-label="Line chart showing MAPE forecast accuracy improving over 12 weeks">MAPE accuracy trend over 12 weeks.</canvas></div>
+    </div>
+  </div>
+  <div class="section-head">FORECASTING MODEL METRICS</div>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-title">Holt-Winters (Triple ETS)</div>
+      <div class="formula">ŷ(t+h) = l(t) + h·b(t) + s(t+h-m)</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:6px">Best for: seasonal goods, holiday spikes. Requires ≥2 full seasons of history.</div>
+      <div style="margin-top:8px"><span class="badge badge-a">MAPE 11.2%</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">ARIMA / SARIMA</div>
+      <div class="formula">ARIMA(p,d,q)(P,D,Q)m</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:6px">Best for: stable trend items, slow movers. Needs stationarity. More data-hungry.</div>
+      <div style="margin-top:8px"><span class="badge badge-b">MAPE 14.1%</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Moving Average</div>
+      <div class="formula">MA(n) = Σ(y(t-i)) / n</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:6px">Best for: new products with &lt;30 days history. Simple, interpretable baseline.</div>
+      <div style="margin-top:8px"><span class="badge badge-c">MAPE 18.6%</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== TAB 3: ABC / XYZ ======== -->
+<div class="section" id="s-abc">
+  <div class="section-head">ABC ANALYSIS — VALUE SEGMENTATION</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-donut inline-icon" aria-hidden="true"></i> ABC Distribution</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#3266ad"></span>A — Top 20% SKUs, 70% revenue</span>
+        <span><span class="leg-dot" style="background:#6197d6;"></span>B — Mid 30% SKUs, 20% revenue</span>
+        <span><span class="leg-dot" style="background:#9eb8d8;background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(0,0,0,.12) 2px,rgba(0,0,0,.12) 4px)"></span>C — Bot 50% SKUs, 10% revenue</span>
+      </div>
+      <div class="ch-wrap" style="height:180px"><canvas id="abc1" role="img" aria-label="Donut chart showing ABC inventory classification: A items 20%, B items 30%, C items 50% of SKUs">ABC inventory classification donut chart.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-bar inline-icon" aria-hidden="true"></i> Pareto Curve (80/20 Rule)</div>
+      <div class="card-sub">Cumulative revenue % vs cumulative SKU % — classic Lorenz curve</div>
+      <div class="ch-wrap" style="height:180px"><canvas id="abc2" role="img" aria-label="Pareto curve showing cumulative revenue percentage against cumulative SKU percentage, illustrating the 80/20 rule">Pareto Lorenz curve for inventory.</canvas></div>
+    </div>
+  </div>
+
+  <div class="section-head">XYZ ANALYSIS — DEMAND VARIABILITY</div>
+  <div class="grid3">
+    <div class="card" style="border-left:3px solid #3266ad">
+      <div class="card-title" style="color:#3266ad">X — Low variability</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">CoV &lt; 0.5 — steady, predictable demand. Standard reorder policy works well.</div>
+      <div class="formula">CoV = σ / μ</div>
+    </div>
+    <div class="card" style="border-left:3px solid #BA7517">
+      <div class="card-title" style="color:#BA7517">Y — Medium variability</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">CoV 0.5–1.0 — seasonal or trend-affected. Needs dynamic safety stock.</div>
+    </div>
+    <div class="card" style="border-left:3px solid #A32D2D">
+      <div class="card-title" style="color:#A32D2D">Z — High variability</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">CoV &gt; 1.0 — erratic, unpredictable. Manual review; consider make-to-order.</div>
+    </div>
+  </div>
+
+  <div class="section-head">ABC × XYZ COMBINED MATRIX</div>
+  <div class="card">
+    <div class="card-sub">9-cell strategic matrix — drives replenishment policy per segment</div>
+    <div style="display:grid;grid-template-columns:80px repeat(3,1fr);gap:4px;font-size:12px">
+      <div></div>
+      <div style="text-align:center;font-weight:500;padding:6px;color:var(--color-text-secondary)">X (stable)</div>
+      <div style="text-align:center;font-weight:500;padding:6px;color:var(--color-text-secondary)">Y (seasonal)</div>
+      <div style="text-align:center;font-weight:500;padding:6px;color:var(--color-text-secondary)">Z (erratic)</div>
+      <div style="font-weight:500;padding:8px 4px;display:flex;align-items:center;color:var(--color-text-secondary)">A (high val)</div>
+      <div class="m-cell" style="background:var(--color-background-success);color:var(--color-text-success);border-color:var(--color-border-success)">Continuous review<br>Tight ROP</div>
+      <div class="m-cell" style="background:var(--color-background-success);color:var(--color-text-success);border-color:var(--color-border-success)">Forecast-driven<br>Buffer stock</div>
+      <div class="m-cell" style="background:var(--color-background-warning);color:var(--color-text-warning);border-color:var(--color-border-warning)">Manual oversight<br>High safety stock</div>
+      <div style="font-weight:500;padding:8px 4px;display:flex;align-items:center;color:var(--color-text-secondary)">B (mid val)</div>
+      <div class="m-cell" style="background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)">Periodic review<br>Standard ROP</div>
+      <div class="m-cell" style="background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)">Seasonal plans<br>Moderate buffer</div>
+      <div class="m-cell" style="background:var(--color-background-warning);color:var(--color-text-warning);border-color:var(--color-border-warning)">Case-by-case<br>High safety stock</div>
+      <div style="font-weight:500;padding:8px 4px;display:flex;align-items:center;color:var(--color-text-secondary)">C (low val)</div>
+      <div class="m-cell" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">Min-max policy<br>Bulk order</div>
+      <div class="m-cell" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">Periodic bulk<br>Simplified rules</div>
+      <div class="m-cell" style="background:var(--color-background-danger);color:var(--color-text-danger);border-color:var(--color-border-danger)">Review for<br>elimination</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== TAB 4: REORDER METRICS ======== -->
+<div class="section" id="s-reorder">
+  <div class="section-head">REORDER CALCULATIONS</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calculator inline-icon" aria-hidden="true"></i> Safety Stock</div>
+      <div class="formula">SS = Z × σ_d × √(Lead Time)</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:6px">Z = service level Z-score (95% → 1.65, 99% → 2.33). σ_d = std dev of daily demand.</div>
+      <div style="margin-top:10px;font-size:12px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>90% service level</span><span style="font-weight:500">Z = 1.28</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>95% service level</span><span style="font-weight:500">Z = 1.65</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>98% service level</span><span style="font-weight:500">Z = 2.05</span></div>
+        <div style="display:flex;justify-content:space-between"><span>99% service level</span><span style="font-weight:500">Z = 2.33</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calculator inline-icon" aria-hidden="true"></i> Reorder Point (ROP)</div>
+      <div class="formula">ROP = (Avg Daily Demand × Lead Time) + Safety Stock</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:6px">The stock level that triggers a purchase order. System alerts when stock ≤ ROP.</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calculator inline-icon" aria-hidden="true"></i> Economic Order Quantity (EOQ)</div>
+      <div class="formula">EOQ = √( 2 × D × S / H )</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:6px">D = annual demand units, S = cost per order placement, H = annual holding cost per unit. Minimises total ordering + holding cost.</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-calculator inline-icon" aria-hidden="true"></i> Max Stock Level</div>
+      <div class="formula">Max Stock = ROP + EOQ</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:6px">Upper bound for inventory. Purchasing above this creates overstock and excess carrying cost.</div>
+    </div>
+  </div>
+
+  <div class="section-head">INTERACTIVE EOQ CALCULATOR</div>
+  <div class="card">
+    <div class="sl">
+      <label style="font-size:12px;color:var(--color-text-secondary);min-width:140px">Annual demand (units)
+        <input type="range" min="100" max="10000" value="3000" id="eoqD" oninput="calcEOQ()" style="display:block;width:160px;margin-top:4px">
+        <span id="eoqDv" style="font-size:11px;font-weight:500">3,000</span>
+      </label>
+      <label style="font-size:12px;color:var(--color-text-secondary);min-width:140px">Order cost (₹/order)
+        <input type="range" min="100" max="5000" value="800" id="eoqS" oninput="calcEOQ()" style="display:block;width:160px;margin-top:4px">
+        <span id="eoqSv" style="font-size:11px;font-weight:500">₹800</span>
+      </label>
+      <label style="font-size:12px;color:var(--color-text-secondary);min-width:140px">Holding cost (₹/unit/yr)
+        <input type="range" min="10" max="500" value="80" id="eoqH" oninput="calcEOQ()" style="display:block;width:160px;margin-top:4px">
+        <span id="eoqHv" style="font-size:11px;font-weight:500">₹80</span>
+      </label>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px">
+      <div class="kpi"><div class="kpi-label">OPTIMAL ORDER QTY</div><div class="kpi-val" id="eoqRes">245</div></div>
+      <div class="kpi"><div class="kpi-label">ORDERS PER YEAR</div><div class="kpi-val" id="eoqOrd">12</div></div>
+      <div class="kpi"><div class="kpi-label">MIN TOTAL COST / YR</div><div class="kpi-val" id="eoqCost">₹19,600</div></div>
+    </div>
+    <div class="ch-wrap" style="height:160px;margin-top:14px">
+      <canvas id="eoqChart" role="img" aria-label="Chart showing ordering cost, holding cost and total cost curves against order quantity, with optimal EOQ highlighted">EOQ cost curves.</canvas>
+    </div>
+  </div>
+
+  <div class="section-head">URGENCY CLASSIFICATION</div>
+  <div class="grid3">
+    <div class="card" style="border-top:3px solid #E24B4A">
+      <div class="card-title"><span class="dot" style="background:#E24B4A"></span> Critical</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Current stock &lt; Safety Stock. Stockout imminent. Immediate PO required.</div>
+    </div>
+    <div class="card" style="border-top:3px solid #BA7517">
+      <div class="card-title"><span class="dot" style="background:#BA7517"></span> Warning</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Current stock &lt; ROP but ≥ Safety Stock. Order within supplier lead time.</div>
+    </div>
+    <div class="card" style="border-top:3px solid #1D9E75">
+      <div class="card-title"><span class="dot" style="background:#1D9E75"></span> Optimal</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Current stock ≥ ROP. No action needed. Monitor for trend changes.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== TAB 5: FINANCIAL ======== -->
+<div class="section" id="s-financial">
+  <div class="section-head">FINANCIAL ANALYTICS CHARTS</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-bar inline-icon" aria-hidden="true"></i> Inventory Valuation Trend</div>
+      <div class="card-sub">Total stock value by month — FIFO / Weighted Average</div>
+      <div class="ch-wrap" style="height:180px"><canvas id="fin1" role="img" aria-label="Bar chart of inventory valuation trend over 12 months">Monthly inventory valuation.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-area inline-icon" aria-hidden="true"></i> COGS vs Revenue</div>
+      <div class="card-sub">Gross margin analysis by product category</div>
+      <div class="ch-wrap" style="height:180px"><canvas id="fin2" role="img" aria-label="Stacked area chart comparing cost of goods sold versus revenue by category">COGS vs revenue by category.</canvas></div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-pie inline-icon" aria-hidden="true"></i> Carrying Cost Breakdown</div>
+      <div class="card-sub">Components of total inventory holding cost</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#3266ad"></span>Capital cost 45%</span>
+        <span><span class="leg-dot" style="background:#BA7517;background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px)"></span>Storage 28%</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>Insurance 12%</span>
+        <span><span class="leg-dot" style="background:#A32D2D;background-image:repeating-linear-gradient(-45deg,transparent,transparent 2px,rgba(255,255,255,.2) 2px,rgba(255,255,255,.2) 4px)"></span>Obsolescence 15%</span>
+      </div>
+      <div class="ch-wrap" style="height:160px"><canvas id="fin3" role="img" aria-label="Pie chart of carrying cost components: capital cost 45%, storage 28%, insurance 12%, obsolescence 15%">Carrying cost breakdown.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-line inline-icon" aria-hidden="true"></i> Slow-Mover Detection</div>
+      <div class="card-sub">Stock age vs turnover rate — dead stock quadrant analysis</div>
+      <table class="tbl">
+        <thead><tr><th>Product</th><th>Days in stock</th><th>Turnover</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>USB-HUB-7P</td><td>142</td><td>0.8×</td><td><span class="badge badge-d">Dead stock</span></td></tr>
+          <tr><td>HDMI-CBL-2M</td><td>89</td><td>1.2×</td><td><span class="badge badge-c">Slow mover</span></td></tr>
+          <tr><td>LAPTOP-DELL15</td><td>24</td><td>8.4×</td><td><span class="badge badge-a">Fast mover</span></td></tr>
+          <tr><td>MOUSE-WL-BLK</td><td>31</td><td>6.1×</td><td><span class="badge badge-a">Fast mover</span></td></tr>
+          <tr><td>PRINTER-INK-C</td><td>67</td><td>2.3×</td><td><span class="badge badge-b">Normal</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-head">COSTING METHODS COMPARISON</div>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-title">FIFO — First In First Out</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Oldest stock sold first. COGS reflects older (usually lower) prices. Ending inventory at recent cost. Best for perishables and inflation environments.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">LIFO — Last In First Out</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)">Newest stock sold first. COGS reflects recent prices, lowering taxable income in inflationary periods. Not allowed under IFRS.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Weighted Average Cost</div>
+      <div class="formula">WAC = Total Cost / Total Units</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px">Recalculates average cost on every receipt. Smooths price volatility. Simplest for high-volume homogenous goods.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== TAB 6: OPERATIONAL CHARTS ======== -->
+<div class="section" id="s-ops">
+  <div class="section-head">SUPPLIER & ORDER PERFORMANCE</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-bar inline-icon" aria-hidden="true"></i> Supplier On-Time Delivery</div>
+      <div class="card-sub">% of POs received on or before expected delivery date</div>
+      <div class="ch-wrap" style="height:180px"><canvas id="op1" role="img" aria-label="Horizontal bar chart of supplier on-time delivery percentages">Supplier on-time delivery rates.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-bar inline-icon" aria-hidden="true"></i> Sales Order Cycle Time</div>
+      <div class="card-sub">Average days from order creation to delivery — monthly trend</div>
+      <div class="ch-wrap" style="height:180px"><canvas id="op2" role="img" aria-label="Line chart of average order cycle time trend over 8 months">Order cycle time trend.</canvas></div>
+    </div>
+  </div>
+
+  <div class="section-head">WAREHOUSE & MOVEMENT HEATMAP</div>
+  <div class="card">
+    <div class="card-title"><i class="ti ti-grid-dots inline-icon" aria-hidden="true"></i> Stock Movement Heatmap — Day × Hour</div>
+    <div class="card-sub">Volume of stock-in / stock-out transactions by day of week and hour — identify peak warehouse activity</div>
+    <div style="margin-top:8px" id="heatmap"></div>
+    <div style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:var(--color-text-secondary)">
+      Low <div style="display:flex;gap:2px">
+        <div style="width:14px;height:14px;border-radius:2px;background:#E6F1FB"></div>
+        <div style="width:14px;height:14px;border-radius:2px;background:#85B7EB"></div>
+        <div style="width:14px;height:14px;border-radius:2px;background:#378ADD"></div>
+        <div style="width:14px;height:14px;border-radius:2px;background:#185FA5"></div>
+        <div style="width:14px;height:14px;border-radius:2px;background:#042C53"></div>
+      </div> High
+    </div>
+  </div>
+
+  <div class="section-head">WAREHOUSE STOCK DISTRIBUTION</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-pie inline-icon" aria-hidden="true"></i> Stock by Warehouse Location</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#3266ad"></span>Main WH — 42%</span>
+        <span><span class="leg-dot" style="background:#1D9E75;background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px)"></span>North Hub — 28%</span>
+        <span><span class="leg-dot" style="background:#BA7517"></span>South WH — 18%</span>
+        <span><span class="leg-dot" style="background:#73726c;background-image:repeating-linear-gradient(-45deg,transparent,transparent 2px,rgba(255,255,255,.2) 2px,rgba(255,255,255,.2) 4px)"></span>Transit — 12%</span>
+      </div>
+      <div class="ch-wrap" style="height:170px"><canvas id="op3" role="img" aria-label="Donut chart showing stock distribution across warehouse locations">Stock distribution by warehouse.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-bar inline-icon" aria-hidden="true"></i> Stock Level vs Reorder Point</div>
+      <div class="card-sub">Current quantity vs ROP and max level — top 6 SKUs</div>
+      <div class="ch-wrap" style="height:170px"><canvas id="op4" role="img" aria-label="Grouped bar chart comparing current stock levels versus reorder points for top 6 SKUs">Stock level vs reorder point comparison.</canvas></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function show(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const gridColor = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
+const tickColor = isDark ? '#9c9a92' : '#73726c';
+
+const defaults = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:{display:false}},
+  scales:{
+    x:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:11}}},
+    y:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:11}}}
+  }
+};
+
+// --- Forecast vs actuals
+const fcLabels = Array.from({length:30},(_,i)=>`D${i+1}`);
+const actual   = [48,52,45,58,62,55,60,70,65,58,72,68,62,75,80,72,68,78,85,82,78,88,92,86,82,95,90,88,96,100];
+const forecast = [50,54,47,60,64,57,62,72,67,60,74,70,64,77,82,74,70,80,87,84,80,90,94,88,84,97,92,90,98,102];
+new Chart(document.getElementById('fc1'),{
+  type:'line',
+  data:{labels:fcLabels,datasets:[
+    {label:'Actual',data:actual,borderColor:'#3266ad',borderWidth:2,pointRadius:0,tension:.3,borderDash:[],fill:false},
+    {label:'Forecast',data:forecast,borderColor:'#BA7517',borderWidth:2,pointRadius:0,tension:.3,borderDash:[6,3],fill:false},
+    {label:'80% CI',data:forecast.map(v=>v+14),borderColor:'transparent',backgroundColor:'rgba(186,117,23,0.10)',fill:'-1',tension:.3,pointRadius:0},
+    {label:'80% CI low',data:forecast.map(v=>v-14),borderColor:'transparent',backgroundColor:'transparent',fill:false,tension:.3,pointRadius:0}
+  ]},
+  options:{...defaults,scales:{x:{...defaults.scales.x,ticks:{...defaults.scales.x.ticks,maxTicksLimit:8}},y:defaults.scales.y}}
+});
+
+// --- Seasonality
+new Chart(document.getElementById('fc2'),{
+  type:'bar',
+  data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    datasets:[{label:'Index',data:[0.72,0.78,0.90,0.95,1.05,1.12,1.18,1.20,1.08,0.95,1.35,1.60],
+      backgroundColor:'#3266ad',borderRadius:4,barPercentage:.7}]},
+  options:{...defaults,plugins:{...defaults.plugins,tooltip:{callbacks:{label:v=>`Index: ${v.raw.toFixed(2)}`}}}}
+});
+
+// --- Demand histogram
+const hist=[0,0,0,2,4,6,10,14,18,20,16,12,8,5,3,2,0,0,0,0];
+new Chart(document.getElementById('fc3'),{
+  type:'bar',
+  data:{labels:hist.map((_,i)=>`${i*2}`),
+    datasets:[{label:'Frequency',data:hist,backgroundColor:hist.map(v=>v>=14?'#3266ad':'#9eb8d8'),borderRadius:2,barPercentage:.9}]},
+  options:{...defaults}
+});
+
+// --- MAPE trend
+new Chart(document.getElementById('fc4'),{
+  type:'line',
+  data:{labels:Array.from({length:12},(_,i)=>`W${i+1}`),
+    datasets:[{label:'MAPE %',data:[22,20,19,18,17,16,15,14,13,13,12,11],
+      borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.1)',fill:true,tension:.4,pointRadius:3,borderWidth:2}]},
+  options:{...defaults,scales:{x:defaults.scales.x,y:{...defaults.scales.y,min:8,max:25,ticks:{...defaults.scales.y.ticks,callback:v=>v+'%'}}}}
+});
+
+// --- ABC donut
+new Chart(document.getElementById('abc1'),{
+  type:'doughnut',
+  data:{labels:['A (20%)', 'B (30%)', 'C (50%)'],
+    datasets:[{data:[70,20,10],backgroundColor:['#3266ad','#6197d6','#9eb8d8'],
+      borderWidth:2,borderColor:'var(--color-background-primary)',
+      hoverBorderColor:'var(--color-background-primary)',
+      hoverOffset:4}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:v=>`${v.label}: ${v.raw}% of revenue`}}}}
+});
+
+// --- Pareto
+const parX=[0,5,10,15,20,30,40,50,60,70,80,90,100];
+const parY=[0,20,35,47,56,70,79,86,90,94,97,99,100];
+new Chart(document.getElementById('abc2'),{
+  type:'line',
+  data:{labels:parX,datasets:[
+    {label:'Cumulative revenue %',data:parY,borderColor:'#3266ad',backgroundColor:'rgba(50,102,173,0.12)',fill:true,tension:.3,borderWidth:2,pointRadius:0},
+    {label:'Perfect equality',data:parX,borderColor:tickColor,borderWidth:1,borderDash:[4,4],fill:false,pointRadius:0,tension:0}
+  ]},
+  options:{...defaults,scales:{x:{...defaults.scales.x,title:{display:true,text:'% of SKUs',color:tickColor,font:{size:11}}},y:{...defaults.scales.y,title:{display:true,text:'% of Revenue',color:tickColor,font:{size:11}},min:0,max:100}}}
+});
+
+// --- Inventory valuation
+new Chart(document.getElementById('fin1'),{
+  type:'bar',
+  data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    datasets:[{label:'₹ Value (L)',data:[420,445,438,460,482,510,498,520,535,528,580,620],
+      backgroundColor:'#3266ad',borderRadius:4,barPercentage:.75}]},
+  options:{...defaults,plugins:{...defaults.plugins,tooltip:{callbacks:{label:v=>`₹${v.raw}L`}}}}
+});
+
+// --- COGS vs Revenue
+new Chart(document.getElementById('fin2'),{
+  type:'bar',
+  data:{labels:['Electronics','Peripherals','Accessories','Cables','Software'],
+    datasets:[
+      {label:'Revenue',data:[580,320,180,95,140],backgroundColor:'#3266ad',borderRadius:4,barPercentage:.8,categoryPercentage:.7},
+      {label:'COGS',data:[360,190,105,55,62],backgroundColor:'#9eb8d8',borderRadius:4,barPercentage:.8,categoryPercentage:.7}
+    ]},
+  options:{...defaults,plugins:{...defaults.plugins,legend:{display:false}}}
+});
+
+// --- Carrying cost pie
+new Chart(document.getElementById('fin3'),{
+  type:'pie',
+  data:{labels:['Capital cost','Storage','Insurance','Obsolescence'],
+    datasets:[{data:[45,28,12,15],
+      backgroundColor:['#3266ad','#BA7517','#1D9E75','#A32D2D'],
+      hoverOffset:4,borderWidth:2,borderColor:'var(--color-background-primary)'}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}
+});
+
+// --- Supplier OTD (horizontal bar)
+new Chart(document.getElementById('op1'),{
+  type:'bar',
+  data:{labels:['Dell India','Samsung Ltd','Sony Corp','Logitech','LG Electronics'],
+    datasets:[{label:'On-time %',data:[96,88,92,78,84],
+      backgroundColor:d=>d.raw>=90?'#1D9E75':d.raw>=80?'#BA7517':'#A32D2D',
+      borderRadius:4,barPercentage:.7}]},
+  options:{...defaults,indexAxis:'y',scales:{
+    y:{...defaults.scales.y,grid:{display:false}},
+    x:{...defaults.scales.x,min:60,max:100,ticks:{...defaults.scales.x.ticks,callback:v=>v+'%'}}
+  }}
+});
+
+// --- Order cycle time
+new Chart(document.getElementById('op2'),{
+  type:'line',
+  data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'],
+    datasets:[{label:'Days',data:[6.8,6.2,5.9,5.4,5.0,4.8,4.5,4.2],
+      borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.1)',fill:true,tension:.4,pointRadius:3,borderWidth:2}]},
+  options:{...defaults,scales:{x:defaults.scales.x,y:{...defaults.scales.y,min:3,max:8,ticks:{...defaults.scales.y.ticks,callback:v=>v+'d'}}}}
+});
+
+// --- Warehouse donut
+new Chart(document.getElementById('op3'),{
+  type:'doughnut',
+  data:{labels:['Main WH','North Hub','South WH','Transit'],
+    datasets:[{data:[42,28,18,12],
+      backgroundColor:['#3266ad','#1D9E75','#BA7517','#73726c'],
+      borderWidth:2,borderColor:'var(--color-background-primary)',hoverOffset:4}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}
+});
+
+// --- Stock level vs ROP
+new Chart(document.getElementById('op4'),{
+  type:'bar',
+  data:{labels:['LAPTOP-DEL','MOUSE-WL','KEYBOARD-M','MONITOR-24','HEADSET-BT','USB-HUB'],
+    datasets:[
+      {label:'Current Stock',data:[28,145,62,18,80,4],backgroundColor:'#3266ad',borderRadius:4,barPercentage:.8,categoryPercentage:.65},
+      {label:'Reorder Point',data:[15,50,30,20,40,10],backgroundColor:'rgba(186,117,23,0.7)',borderRadius:4,barPercentage:.8,categoryPercentage:.65}
+    ]},
+  options:{...defaults,plugins:{...defaults.plugins,legend:{display:false}}}
+});
+
+// --- EOQ chart
+function calcEOQ(){
+  const D=+document.getElementById('eoqD').value;
+  const S=+document.getElementById('eoqS').value;
+  const H=+document.getElementById('eoqH').value;
+  document.getElementById('eoqDv').textContent=D.toLocaleString('en-IN');
+  document.getElementById('eoqSv').textContent='₹'+S;
+  document.getElementById('eoqHv').textContent='₹'+H;
+  const eoq=Math.round(Math.sqrt((2*D*S)/H));
+  const orders=Math.round(D/eoq);
+  const cost=Math.round(eoq*H/2 + D/eoq*S);
+  document.getElementById('eoqRes').textContent=eoq.toLocaleString('en-IN');
+  document.getElementById('eoqOrd').textContent=orders;
+  document.getElementById('eoqCost').textContent='₹'+cost.toLocaleString('en-IN');
+
+  const maxQ=eoq*3;
+  const qs=Array.from({length:30},(_,i)=>Math.round((i+1)*maxQ/30));
+  const oC=qs.map(q=>Math.round(D/q*S));
+  const hC=qs.map(q=>Math.round(q*H/2));
+  const tC=qs.map((q,i)=>oC[i]+hC[i]);
+  window.eoqChartRef.data.labels=qs;
+  window.eoqChartRef.data.datasets[0].data=oC;
+  window.eoqChartRef.data.datasets[1].data=hC;
+  window.eoqChartRef.data.datasets[2].data=tC;
+  window.eoqChartRef.update();
+}
+window.eoqChartRef = new Chart(document.getElementById('eoqChart'),{
+  type:'line',
+  data:{labels:[],datasets:[
+    {label:'Ordering cost',data:[],borderColor:'#A32D2D',borderWidth:2,fill:false,tension:.3,pointRadius:0,borderDash:[5,3]},
+    {label:'Holding cost', data:[],borderColor:'#1D9E75',borderWidth:2,fill:false,tension:.3,pointRadius:0,borderDash:[3,3]},
+    {label:'Total cost',   data:[],borderColor:'#3266ad',borderWidth:2,fill:false,tension:.3,pointRadius:0}
+  ]},
+  options:{...defaults}
+});
+calcEOQ();
+
+// --- Heatmap (stock movements by day × hour)
+const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const hours=['6am','8am','10am','12pm','2pm','4pm','6pm','8pm'];
+const hmData=[[2,4,9,12,14,16,8,3],[3,5,11,15,18,14,6,2],[1,3,7,10,12,8,4,1],[4,6,13,18,20,16,9,3],[5,8,14,18,22,18,10,4],[1,2,4,6,5,4,2,1],[0,1,2,3,3,2,1,0]];
+const hmColors=['#E6F1FB','#85B7EB','#378ADD','#185FA5','#042C53'];
+function hmColor(v){if(v<3)return hmColors[0];if(v<7)return hmColors[1];if(v<12)return hmColors[2];if(v<17)return hmColors[3];return hmColors[4];}
+function hmText(v){if(v<7)return '#185FA5';if(v<12)return '#fff';return '#fff';}
+const hm=document.getElementById('heatmap');
+let html='<div style="display:grid;grid-template-columns:40px repeat(8,1fr);gap:3px;font-size:11px">';
+html+='<div></div>';
+hours.forEach(h=>html+=`<div style="text-align:center;padding:2px 0;color:var(--color-text-secondary)">${h}</div>`);
+days.forEach((d,di)=>{
+  html+=`<div style="display:flex;align-items:center;color:var(--color-text-secondary);font-weight:500">${d}</div>`;
+  hours.forEach((_,hi)=>{
+    const v=hmData[di][hi];
+    html+=`<div style="background:${hmColor(v)};color:${hmText(v)};border-radius:3px;height:28px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500">${v}</div>`;
+  });
+});
+html+='</div>';
+hm.innerHTML=html;
+</script>

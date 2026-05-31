@@ -1,0 +1,23 @@
+# Root dependencies and build files
+node_modules/
+**/node_modules/
+.next/
+**/dist/
+logs/
+*.log
+backend/logs/
+
+# Local env files
+.env
+.env.*
+!.env.example
+backend/.env
+
+# System/IDE files
+.DS_Store
+.vscode/
+.idea/
+
+# Next.js and typescript build files
+*.tsbuildinfo
+next-env.d.ts
