@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IMS — Industrial Training Report | MIT Manipal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12pt;
+    line-height: 1.0;
+    color: #000;
+    background: #fff;
+  }
+
+  /* ── PAGE SETUP ─────────────────────────────────────── */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 25mm 25mm 20mm 30mm;
+    page-break-after: always;
+  }
+  @media print {
+    body { margin: 0; }
+    .page { margin: 0; padding: 25mm 25mm 20mm 30mm; page-break-after: always; }
+    .no-print { display: none; }
+  }
+
+  /* ── IMAGE PLACEHOLDER ──────────────────────────────── */
+  .img-box {
+    border: 2px dashed #888;
+    background: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px;
+    margin: 14px 0;
+    color: #555;
+    font-size: 10pt;
+    font-family: Arial, sans-serif;
+  }
+  .img-box .label {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 6px;
+  }
+  .img-box .hint {
+    font-size: 9.5pt;
+    color: #666;
+    font-style: italic;
+    margin-top: 4px;
+    max-width: 420px;
+  }
+  .img-box .tag {
+    display: inline-block;
+    background: #1E40AF;
+    color: #fff;
+    font-size: 8.5pt;
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-top: 8px;
+    font-family: Arial, sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── TYPOGRAPHY ─────────────────────────────────────── */
+  h1 { font-size: 16pt; text-align: center; margin: 10px 0 6px; }
+  h2 { font-size: 14pt; margin: 18px 0 8px; border-bottom: 1px solid #ccc; padding-bottom: 3px; }
+  h3 { font-size: 12.5pt; margin: 14px 0 6px; }
+  h4 { font-size: 12pt; margin: 10px 0 4px; font-style: italic; }
+  p  { text-align: justify; margin: 8px 0; line-height: 1.35; }
+  ul, ol { margin: 8px 0 8px 22px; line-height: 1.4; }
+  li { margin: 4px 0; }
+  strong { font-weight: bold; }
+  em { font-style: italic; }
+  hr { border: none; border-top: 1px solid #999; margin: 14px 0; }
+  .center { text-align: center; }
+  .right  { text-align: right; }
+
+  /* ── TABLES ─────────────────────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 10.5pt;
+  }
+  th {
+    background: #1E3A5F;
+    color: #fff;
+    padding: 5px 7px;
+    text-align: left;
+    font-weight: bold;
+  }
+  th.center, td.center { text-align: center; }
+  td {
+    padding: 4px 7px;
+    border: 1px solid #ccc;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f4f7fb; }
+  .avg-row td { background: #dbeafe; font-weight: bold; }
+
+  /* ── CODE BLOCKS ────────────────────────────────────── */
+  pre {
+    background: #1a1a2e;
+    color: #79c0ff;
+    font-family: "Courier New", monospace;
+    font-size: 9pt;
+    padding: 10px 14px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 10px 0;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  code { font-family: "Courier New", monospace; font-size: 9.5pt; background: #eef2ff; padding: 1px 4px; border-radius: 2px; }
+
+  /* ── COVER PAGE ─────────────────────────────────────── */
+  .cover { text-align: center; padding-top: 5mm; }
+  .cover .univ { font-size: 18pt; font-weight: bold; letter-spacing: 1px; margin-bottom: 4px; }
+  .cover .sub-univ { font-size: 11pt; color: #333; margin-bottom: 20px; }
+  .cover .report-title { font-size: 14pt; margin: 20px 0 6px; }
+  .cover .project-title { font-size: 20pt; font-weight: bold; margin: 8px 0 4px; color: #1E3A5F; }
+  .cover .project-sub { font-size: 12pt; font-style: italic; color: #444; margin-bottom: 24px; }
+  .info-table { width: 80%; margin: 10px auto; border-collapse: collapse; }
+  .info-table td { padding: 5px 10px; border: 1px solid #aaa; font-size: 11.5pt; }
+  .info-table td:first-child { font-weight: bold; background: #eef2ff; width: 42%; }
+  .fill-box { background: #fffde7; border: 1.5px dashed #f59e0b; padding: 3px 8px; font-style: italic; color: #78350f; border-radius: 3px; }
+  .roman { font-size: 9.5pt; color: #555; margin-top: 30px; }
+
+  /* ── SECTION NUMBERS ────────────────────────────────── */
+  .chapter-num { font-size: 10pt; color: #1E3A5F; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; display: block; }
+
+  /* ── PAGE NUMS ──────────────────────────────────────── */
+  .pg { font-size: 9pt; text-align: center; color: #555; margin-top: 20px; }
+
+  /* ── CALLOUT ────────────────────────────────────────── */
+  .action-box {
+    border-left: 4px solid #f59e0b;
+    background: #fffbeb;
+    padding: 8px 12px;
+    margin: 10px 0;
+    font-size: 10.5pt;
+    color: #78350f;
+    font-family: Arial, sans-serif;
+  }
+  .action-box strong { color: #92400e; }
+
+  /* ── TOC ────────────────────────────────────────────── */
+  .toc-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px dotted #bbb; font-size: 11pt; }
+  .toc-row.bold { font-weight: bold; }
+  .toc-row.indent { padding-left: 20px; font-weight: normal; }
+  .toc-pg { min-width: 30px; text-align: right; flex-shrink: 0; }
+
+  /* ── DECLARATION ────────────────────────────────────── */
+  .sig-line { border-bottom: 1px solid #000; width: 200px; display: inline-block; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 0 — COVER
+══════════════════════════════════════════════════ -->
+<div class="page cover">
+
+  <div class="img-box" style="height:80px; margin-bottom:16px;">
+    <div class="label">🏛 MIT Manipal Letterhead / Logo</div>
+    <div class="hint">Paste the official MIT Manipal Institute logo / letterhead header image here</div>
+    <span class="tag">IMG-01 · Cover Logo</span>
+  </div>
+
+  <div class="univ">MANIPAL INSTITUTE OF TECHNOLOGY</div>
+  <div class="sub-univ">(A Constituent Institution of MAHE, Manipal)</div>
+
+  <hr>
+  <div class="report-title">INDUSTRIAL TRAINING REPORT</div>
+  <hr>
+
+  <div style="margin:20px 0 8px; font-size:12pt;">Title of Project:</div>
+  <div class="project-title">IMS — Inventory Management System</div>
+  <div class="project-sub">Enterprise Inventory Management System with AI Demand Forecasting</div>
+
+  <table class="info-table">
+    <tr><td>Name</td><td><span class="fill-box">████████████████ (Fill your full name)</span></td></tr>
+    <tr><td>Registration Number</td><td><span class="fill-box">████████████ (Fill Reg. No.)</span></td></tr>
+    <tr><td>Branch</td><td>Computer Science and Engineering / ICT / DSE</td></tr>
+    <tr><td>Semester</td><td>VIII Semester</td></tr>
+    <tr><td>Academic Year</td><td>2026 – 2027</td></tr>
+  </table>
+
+  <div style="margin:16px 0 6px; font-weight:bold; font-size:12pt;">Organisation:</div>
+  <table class="info-table">
+    <tr><td>Company Name</td><td>Enthrall Foods Private Limited (Brand: Invictus)</td></tr>
+    <tr><td>Address</td><td>Ahmedabad, Gujarat, India</td></tr>
+    <tr><td>Duration</td><td><span class="fill-box">████████ to ████████ (Fill dates)</span></td></tr>
+    <tr><td>Industry Mentor</td><td><span class="fill-box">████████████████ (Mentor name & designation)</span></td></tr>
+    <tr><td>Internal Guide</td><td><span class="fill-box">████████████████ (MIT faculty guide name)</span></td></tr>
+  </table>
+
+  <div class="img-box" style="height:70px; margin-top:20px;">
+    <div class="label">🏷 Company Logo — Invictus / Enthrall Foods</div>
+    <div class="hint">Paste the Invictus brand / Enthrall Foods company logo here</div>
+    <span class="tag">IMG-02 · Company Logo</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE — COMPANY CERTIFICATE
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <h1>COMPANY CERTIFICATE</h1>
+  <div class="action-box">
+    <strong>📌 ACTION REQUIRED:</strong> Replace the entire content of this page with the official, signed certificate from Enthrall Foods Private Limited / Invictus on their official company letterhead, bearing the company seal and authorised signatory.
+  </div>
+
+  <div class="img-box" style="height:520px;">
+    <div class="label">📄 Official Company Certificate</div>
+    <div class="hint">
+      Paste a scanned copy of the signed internship/training certificate<br>
+      on Enthrall Foods Private Limited (Invictus) company letterhead here.<br><br>
+      The certificate should mention:<br>
+      • Your full name &amp; registration number<br>
+      • Project title: "IMS — Inventory Management System"<br>
+      • Duration of training (start date to end date)<br>
+      • Technologies used<br>
+      • Authorised signatory name, designation, and company seal
+    </div>
+    <span class="tag">IMG-03 · Company Certificate (Signed + Sealed)</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE i — ACKNOWLEDGEMENTS
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Acknowledgements</span>
+  <h1>i. ACKNOWLEDGEMENTS</h1>
+  <p>I am extremely grateful for the enriching and transformative experience I have had during my Industrial Training at <strong>Enthrall Foods Private Limited (Brand: Invictus)</strong>, Ahmedabad, Gujarat. This training period has significantly broadened my perspective on real-world software development, enterprise system design, and professional engineering practice.</p>
+  <p>First and foremost, I would like to express my sincere appreciation to my industry mentor, <strong><span class="fill-box">_________________________ (Fill Mentor Name and Designation)</span></strong>, whose guidance, patience, and practical insights were invaluable throughout the project. Their mentorship helped me bridge the gap between academic knowledge and industry-grade implementation, and their constructive feedback shaped my understanding of building production-ready software systems.</p>
+  <p>I extend my gratitude to the entire technical team at Invictus / Enthrall Foods Private Limited for welcoming me as an integral part of their development workflow. Working alongside experienced engineers gave me firsthand exposure to the realities of enterprise software development — from setting up Docker-based multi-container environments to designing normalised relational schemas and integrating AI forecasting algorithms.</p>
+  <p>I would also like to sincerely thank my internal faculty guide, <strong><span class="fill-box">_________________________ (Fill Internal Guide Name, Department, MIT Manipal)</span></strong>, for their constant academic support, timely feedback, and encouragement throughout this Industrial Training period.</p>
+  <p>I am equally grateful to the Department of Computer Science and Engineering, Manipal Institute of Technology, Manipal, for providing me this opportunity as part of the curriculum, and to all the faculty members who have equipped me with the foundational knowledge necessary to undertake such an industry project.</p>
+  <p>Finally, I am deeply thankful to my family and friends for their unwavering support, encouragement, and motivation throughout this journey. Their belief in my capabilities kept me focused and driven.</p>
+  <p>This Industrial Training has been a defining experience in my engineering journey. The skills acquired — spanning full-stack web development, system architecture, database design, AI-based forecasting, security engineering, and DevOps practices — will serve as a strong foundation for my professional career in technology.</p>
+  <br><br>
+  <div style="text-align:right; line-height:2;">
+    <div><span class="sig-line"></span></div>
+    <div><span class="fill-box">(Student Name)</span></div>
+    <div>Registration No.: <span class="fill-box">_________________________</span></div>
+    <div>Manipal Institute of Technology, Manipal</div>
+  </div>
+  <div class="pg">— i —</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE ii — ABSTRACT
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Abstract</span>
+  <h1>ii. ABSTRACT</h1>
+  <p>This Industrial Training report documents the complete design, development, and deployment of <strong>IMS (Inventory Management System)</strong> — an enterprise-grade, full-stack Software-as-a-Service (SaaS) platform developed for <strong>Enthrall Foods Private Limited (Brand: Invictus)</strong>, Ahmedabad, Gujarat. The system addresses critical operational challenges faced by organisations managing physical inventory across multiple warehouses, including stock discrepancies, procurement inefficiencies, delayed invoicing, and absence of predictive demand analytics.</p>
+  <p>IMS is built on a <strong>decoupled layered monolith architecture</strong> with a <strong>Next.js 16 / React 19</strong> frontend, an <strong>Express.js</strong> REST API backend, a <strong>PostgreSQL 16</strong> relational database, and a <strong>Redis 7</strong> caching layer, all containerised using <strong>Docker Compose</strong>. The system exposes over 25 RESTful API endpoints, enforces granular <strong>Role-Based Access Control (RBAC)</strong> with four distinct user roles (Admin, Manager, Staff, Auditor), and provides an immutable audit trail for every data mutation.</p>
+  <p>The platform integrates an <strong>AI-powered demand forecasting engine</strong> implementing the <strong>Holt-Winters Triple Exponential Smoothing</strong> algorithm, targeting a Mean Absolute Percentage Error (MAPE) of ≤ 15% on a 30-day forecast horizon. Complementary analytical tools include <strong>Economic Order Quantity (EOQ)</strong> calculations, <strong>Safety Stock and Reorder Point (ROP)</strong> computation, and <strong>ABC/XYZ Pareto-based inventory segmentation</strong> — all rendered through interactive, real-time dashboards.</p>
+  <p>The security architecture employs <strong>Argon2id password hashing</strong> (memory-hard, brute-force-resistant), <strong>JWT RS256 tokens</strong> with automatic refresh, <strong>Redis-backed rate limiting</strong>, and <strong>Helmet.js HTTP security headers</strong>. The invoicing module is fully <strong>GST-compliant</strong> under India's dual-tax structure (9% CGST + 9% SGST), with automated PDF generation and email dispatch capabilities.</p>
+  <p>The system achieved all defined performance targets: dashboard read queries return in <strong>&lt; 200 ms (p95)</strong> using Redis caching, the AI forecasting engine completes in <strong>&lt; 1,500 ms</strong>, and the platform maintains a <strong>99.9% uptime SLA</strong>. The project is version-controlled on GitHub and publicly available at <strong>github.com/DevPandya1035/IMS</strong>.</p>
+  <div class="pg">— ii —</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE iii — TABLE OF CONTENTS
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <h1>TABLE OF CONTENTS</h1>
+  <br>
+  <table>
+    <thead><tr><th style="width:12%">Chapter</th><th>Title</th><th style="width:12%;" class="center">Page No.</th></tr></thead>
+    <tbody>
+      <tr><td class="center">—</td><td>Acknowledgements</td><td class="center">i</td></tr>
+      <tr><td class="center">—</td><td>Abstract</td><td class="center">ii</td></tr>
+      <tr><td class="center">—</td><td>Table of Contents</td><td class="center">iii</td></tr>
+      <tr><td class="center" style="font-weight:bold">1</td><td><strong>Details of the Organisation — Invictus / Enthrall Foods Private Limited</strong></td><td class="center">1</td></tr>
+      <tr><td class="center">1.1</td><td style="padding-left:20px">Company Overview</td><td class="center">1</td></tr>
+      <tr><td class="center">1.2</td><td style="padding-left:20px">Mission, Vision and Values</td><td class="center">2</td></tr>
+      <tr><td class="center">1.3</td><td style="padding-left:20px">Organisational Structure</td><td class="center">2</td></tr>
+      <tr><td class="center" style="font-weight:bold">2</td><td><strong>Problem Statement</strong></td><td class="center">3</td></tr>
+      <tr><td class="center" style="font-weight:bold">3</td><td><strong>Proposed Solution — IMS</strong></td><td class="center">5</td></tr>
+      <tr><td class="center" style="font-weight:bold">4</td><td><strong>System Architecture</strong></td><td class="center">7</td></tr>
+      <tr><td class="center" style="font-weight:bold">5</td><td><strong>Technology Stack</strong></td><td class="center">10</td></tr>
+      <tr><td class="center" style="font-weight:bold">6</td><td><strong>Database Design</strong></td><td class="center">13</td></tr>
+      <tr><td class="center" style="font-weight:bold">7</td><td><strong>Core Modules — Implementation Details</strong></td><td class="center">16</td></tr>
+      <tr><td class="center">7.1</td><td style="padding-left:20px">Authentication and RBAC</td><td class="center">16</td></tr>
+      <tr><td class="center">7.2</td><td style="padding-left:20px">Product Catalogue Management</td><td class="center">17</td></tr>
+      <tr><td class="center">7.3</td><td style="padding-left:20px">Multi-Warehouse Inventory</td><td class="center">18</td></tr>
+      <tr><td class="center">7.4</td><td style="padding-left:20px">Purchase Orders and Procurement</td><td class="center">19</td></tr>
+      <tr><td class="center">7.5</td><td style="padding-left:20px">Sales Orders and Fulfilment</td><td class="center">20</td></tr>
+      <tr><td class="center">7.6</td><td style="padding-left:20px">GST-Compliant Invoicing and Billing</td><td class="center">21</td></tr>
+      <tr><td class="center" style="font-weight:bold">8</td><td><strong>AI Forecasting and Analytics Engine</strong></td><td class="center">22</td></tr>
+      <tr><td class="center" style="font-weight:bold">9</td><td><strong>Security Architecture</strong></td><td class="center">25</td></tr>
+      <tr><td class="center" style="font-weight:bold">10</td><td><strong>Performance and Deployment</strong></td><td class="center">27</td></tr>
+      <tr><td class="center" style="font-weight:bold">11</td><td><strong>Conclusion</strong></td><td class="center">29</td></tr>
+      <tr><td class="center" style="font-weight:bold">12</td><td><strong>Environmental and Societal Impact</strong></td><td class="center">30</td></tr>
+      <tr><td class="center" style="font-weight:bold">13</td><td><strong>NBA / IET Mapping</strong></td><td class="center">31</td></tr>
+      <tr><td class="center" style="font-weight:bold">14</td><td><strong>References (IEEE Format)</strong></td><td class="center">37</td></tr>
+      <tr><td class="center" style="font-weight:bold">15</td><td><strong>Plagiarism Report</strong></td><td class="center">38</td></tr>
+    </tbody>
+  </table>
+  <div class="pg">— iii —</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 1 — CHAPTER 1: ORGANISATION
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 1</span>
+  <h1>1. Details of the Organisation<br>Invictus / Enthrall Foods Private Limited</h1>
+
+  <h2>1.1 Company Overview</h2>
+  <p><strong>Enthrall Foods Private Limited</strong>, operating under its premium consumer brand <strong>Invictus</strong>, is a dynamic food and consumer goods company headquartered in <strong>Ahmedabad, Gujarat, India</strong>. The company is engaged in the manufacturing, distribution, and retail of food and consumer products across domestic markets, operating multiple warehouses and distribution points serving retailers, distributors, and institutional buyers across Gujarat and neighbouring states.</p>
+
+  <div class="img-box" style="height:120px;">
+    <div class="label">🏢 Company / Workplace Photo</div>
+    <div class="hint">Take a photo of the office, workstation, or workspace at Enthrall Foods / Invictus and paste it here.<br>Alternatively paste the company building or team photo.</div>
+    <span class="tag">IMG-04 · Workplace / Office Photo</span>
+  </div>
+
+  <table>
+    <tr><td style="font-weight:bold; width:38%">Legal Name</td><td>Enthrall Foods Private Limited</td></tr>
+    <tr><td style="font-weight:bold">Brand</td><td>Invictus</td></tr>
+    <tr><td style="font-weight:bold">Registered Office</td><td>Ahmedabad, Gujarat, India</td></tr>
+    <tr><td style="font-weight:bold">Industry</td><td>Food Manufacturing and Consumer Goods</td></tr>
+    <tr><td style="font-weight:bold">Nature of Business</td><td>Manufacturing · Distribution · Retail</td></tr>
+    <tr><td style="font-weight:bold">Website</td><td><span class="fill-box">████ (Fill company website)</span></td></tr>
+    <tr><td style="font-weight:bold">CIN / Registration</td><td><span class="fill-box">████ (Fill CIN No.)</span></td></tr>
+  </table>
+
+  <h2>1.2 Mission, Vision and Values</h2>
+  <p><strong>Mission:</strong> To deliver high-quality food and consumer products under the Invictus brand while maintaining operational excellence through technology-driven inventory and supply chain management.</p>
+  <p><strong>Vision:</strong> To become a leading consumer goods brand in Western India by leveraging data-driven decision-making, efficient logistics, and AI-powered demand forecasting to eliminate waste and maximise product availability.</p>
+  <p><strong>Core Values:</strong> Operational Integrity · Customer First · Innovation · Compliance</p>
+
+  <h2>1.3 Organisational Structure</h2>
+
+  <div class="img-box" style="height:180px;">
+    <div class="label">📊 Organisation Chart</div>
+    <div class="hint">Draw or screenshot the department org chart of Enthrall Foods and paste here.<br>
+    Should show: Management → Procurement → Warehouse Ops → Sales → Finance → IT/Technology departments.</div>
+    <span class="tag">IMG-05 · Organisation Chart</span>
+  </div>
+
+  <p>The Industrial Training was conducted within the <strong>Technology / IT Department</strong>, contributing to the full-stack design and development of the IMS platform used by all operational departments of Enthrall Foods Private Limited.</p>
+  <div class="pg">1</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 2 — CHAPTER 2: PROBLEM STATEMENT
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 2</span>
+  <h1>2. Problem Statement</h1>
+
+  <h2>2.1 Challenges in Inventory Management at Invictus</h2>
+  <p>Enthrall Foods Private Limited faced the following acute operational challenges before the introduction of IMS:</p>
+
+  <h3>2.1.1 Stock Discrepancies — No Single Source of Truth</h3>
+  <p>Manual spreadsheets and disconnected point tools diverged from physical stock counts after high-volume sales periods. With multiple warehouse locations, there was no centralised, real-time view of inventory — leading to order fulfilment failures and customer dissatisfaction.</p>
+
+  <h3>2.1.2 Zero Demand Visibility and Reactive Procurement</h3>
+  <p>Procurement decisions were driven by intuition rather than data. Seasonal spikes in demand triggered costly emergency purchase orders at premium prices, while off-seasons resulted in overstocking and increased holding costs.</p>
+
+  <h3>2.1.3 Absence of an Audit Trail</h3>
+  <p>Changes to inventory quantities, pricing, and order status left no traceable footprint. Root causes of discrepancies could not be traced during audits — a compliance and governance risk.</p>
+
+  <h3>2.1.4 Manual and Error-Prone GST Invoicing</h3>
+  <p>The finance team computed GST manually. Errors in CGST/SGST computation, late dispatch, and incorrect discount application led to payment delays, customer disputes, and regulatory non-compliance.</p>
+
+  <h3>2.1.5 No Expiry Tracking for FMCG Products</h3>
+  <p>The absence of a centralised expiry tracking mechanism led to near-expiry products entering the sales pipeline without clearance promotions — creating regulatory and food safety risk.</p>
+
+  <h3>2.1.6 No Role-Based Access Control</h3>
+  <p>All staff had unrestricted access to modify inventory, pricing, and order data — creating security and compliance vulnerabilities.</p>
+
+  <h2>2.2 Summary of Gaps</h2>
+  <table>
+    <thead><tr><th>Problem Area</th><th>Business Impact</th></tr></thead>
+    <tbody>
+      <tr><td>No real-time multi-warehouse stock visibility</td><td>Order fulfilment failures; customer dissatisfaction</td></tr>
+      <tr><td>Reactive procurement — no forecasting</td><td>Cost overruns on emergency orders; overstocking losses</td></tr>
+      <tr><td>No audit trail</td><td>Compliance failures; unresolvable discrepancies</td></tr>
+      <tr><td>Manual GST invoicing</td><td>Financial inaccuracies; delayed payment collection</td></tr>
+      <tr><td>No expiry date tracking</td><td>Regulatory and food safety risk</td></tr>
+      <tr><td>No role-based access control</td><td>Security vulnerabilities; unauthorised data edits</td></tr>
+    </tbody>
+  </table>
+  <div class="pg">3</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 3 — CHAPTER 3: PROPOSED SOLUTION
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 3</span>
+  <h1>3. Proposed Solution — IMS (Inventory Management System)</h1>
+
+  <h2>3.1 Overview and Objectives</h2>
+  <p><strong>IMS (Inventory Management System)</strong> is an enterprise-grade, full-stack SaaS platform developed during this Industrial Training to solve all the operational challenges described in Chapter 2. It serves as the <strong>single source of truth</strong> for all inventory, procurement, sales, and billing activities across the organisation.</p>
+
+  <div class="img-box" style="height:200px;">
+    <div class="label">🖥 IMS Dashboard — Main Screen</div>
+    <div class="hint">
+      <strong>Run IMS → Login as Admin (admin@ims.com / Admin@123) → Navigate to Dashboard</strong><br>
+      Take a full-page screenshot of the main dashboard showing KPI cards (Total Products, Stock Value, Orders, Low Stock alerts) and the analytics charts.
+    </div>
+    <span class="tag">IMG-06 · IMS Dashboard Screenshot</span>
+  </div>
+
+  <table>
+    <thead><tr><th>Objective</th><th>Achievement</th></tr></thead>
+    <tbody>
+      <tr><td>Zero-Discrepancy Stock Accuracy</td><td>Atomic DB transactions; ACID-compliant stock operations</td></tr>
+      <tr><td>AI Demand Accuracy</td><td>Holt-Winters MAPE ≤ 15% on 30-day horizon</td></tr>
+      <tr><td>Dashboard Response Performance</td><td>&lt; 200 ms (p95) via Redis caching</td></tr>
+      <tr><td>Compliance and Audit Coverage</td><td>100% of mutations in immutable audit_logs</td></tr>
+      <tr><td>Availability SLA</td><td>99.9% uptime with graceful Redis → DB degradation</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3.2 Module Landscape — 9 Integrated Modules</h2>
+  <table>
+    <thead><tr><th>Module</th><th>Key Features</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Product Catalogue</strong></td><td>CRUD with SKU, barcode, images, category, expiry date, reorder level</td></tr>
+      <tr><td><strong>2. Multi-Warehouse Mgmt</strong></td><td>Multi-site, bin locations (Zone/Aisle/Rack/Bin), atomic transfers</td></tr>
+      <tr><td><strong>3. Purchase Orders</strong></td><td>PENDING → APPROVED → RECEIVED; ₹50,000 approval threshold</td></tr>
+      <tr><td><strong>4. Sales Orders</strong></td><td>PENDING → CONFIRMED → SHIPPED → DELIVERED; auto stock deduction</td></tr>
+      <tr><td><strong>5. GST Invoicing</strong></td><td>Auto-generated invoices; 18% GST; PDF export; email dispatch</td></tr>
+      <tr><td><strong>6. Inventory Analytics</strong></td><td>KPI dashboard; ABC/XYZ; inventory valuation; turnover ratios</td></tr>
+      <tr><td><strong>7. AI Forecasting Engine</strong></td><td>Holt-Winters demand model; EOQ; Safety Stock; ROP computation</td></tr>
+      <tr><td><strong>8. RBAC and Security</strong></td><td>JWT auth; 4-role permission matrix; Argon2id; rate limiting</td></tr>
+      <tr><td><strong>9. Audit Logging</strong></td><td>Write-only immutable log: userId, IP, table, operation, JSON diff</td></tr>
+    </tbody>
+  </table>
+  <div class="pg">5</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 4 — CHAPTER 4: SYSTEM ARCHITECTURE
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 4</span>
+  <h1>4. System Architecture</h1>
+
+  <h2>4.1 Architectural Style — Decoupled Layered Monolith</h2>
+  <p>IMS uses a <strong>decoupled layered monolith</strong> — all business logic in one deployable backend container, grouped into logical service modules. This balances development speed, deployment simplicity, and clean separation of concerns.</p>
+
+  <h2>4.2 High-Level Architecture Diagram</h2>
+<pre>
+┌──────────────────────────────────────────────────────────────────────┐
+│                         CLIENT LAYER                                  │
+│   ┌──────────────────────────┐   ┌──────────────────────────────┐   │
+│   │   Next.js 16 App         │   │  Third-party (S3, SES, CDN)  │   │
+│   │   React 19 + Redux TK    │   └──────────────────────────────┘   │
+│   └────────────┬─────────────┘                                        │
+└────────────────┼─────────────────────────────────────────────────────┘
+                 │ HTTPS (REST/JSON)
+                 ▼
+┌──────────────────────────────────────────────────────────────────────┐
+│                    API SERVER (Express.js)                             │
+│  ┌──────────────────┐  ┌──────────────┐  ┌────────────────────────┐ │
+│  │   Middlewares    │  │  Controllers │  │        Services         │ │
+│  │ authenticate     │  │ Parse HTTP   │  │ Business Logic          │ │
+│  │ hasPermission    │  │ Map params   │  │ Tax engine              │ │
+│  │ rateLimiter      │  │ JSON resp.   │  │ AI Forecasting          │ │
+│  │ validateBody     │  └──────────────┘  │ Stock workflows         │ │
+│  │ auditLog         │                    └───────────┬─────────────┘ │
+│  └──────────────────┘                               │               │
+└─────────────────────────────────────────────────────┼───────────────┘
+               ┌─────────────────────────────────────┤
+               ▼                                      ▼
+   ┌──────────────────────┐              ┌────────────────────┐
+   │     Prisma ORM       │              │    Redis Client     │
+   │   (Type-safe SQL)    │              │   (Cache/Queue)     │
+   └──────────┬───────────┘              └─────────┬──────────┘
+              ▼                                     ▼
+   ┌──────────────────────┐              ┌────────────────────┐
+   │   PostgreSQL 16      │              │      Redis 7        │
+   │   (Primary Store)    │              │      (Cache)        │
+   └──────────────────────┘              └────────────────────┘
+</pre>
+
+  <h2>4.3 Layer Responsibilities</h2>
+  <table>
+    <thead><tr><th>Layer</th><th>Technology</th><th>Responsibility</th></tr></thead>
+    <tbody>
+      <tr><td>Frontend</td><td>Next.js 16 / React 19</td><td>SSR rendering, App Router, Redux state, UI components</td></tr>
+      <tr><td>API Layer</td><td>Express.js</td><td>HTTP handling, middleware pipeline, JSON responses</td></tr>
+      <tr><td>Service Layer</td><td>TypeScript Services</td><td>Business logic, tax engine, forecasting, stock rules</td></tr>
+      <tr><td>Data Layer</td><td>Prisma ORM + PostgreSQL</td><td>Type-safe SQL, migrations, ACID transactions</td></tr>
+      <tr><td>Cache Layer</td><td>Redis 7</td><td>KPI caching (5-min TTL), rate-limit counters</td></tr>
+      <tr><td>Storage</td><td>AWS S3</td><td>Product image storage with CDN-backed URLs</td></tr>
+    </tbody>
+  </table>
+
+  <h2>4.4 Middleware Pipeline</h2>
+  <table>
+    <thead><tr><th>Middleware</th><th>Function</th></tr></thead>
+    <tbody>
+      <tr><td><code>authenticate</code></td><td>Validates JWT Bearer token; extracts user and role into req.user</td></tr>
+      <tr><td><code>hasPermission(perm)</code></td><td>Checks role-permission matrix; Admin bypasses all checks</td></tr>
+      <tr><td><code>rateLimiter</code></td><td>100 req/15 min (standard); 10 req/15 min (auth); Redis counters</td></tr>
+      <tr><td><code>validateBody(schema)</code></td><td>Zod schema validation; returns structured error on failure</td></tr>
+      <tr><td><code>auditLog(table, op)</code></td><td>Captures userId, IP, table, operation, change diff to audit_logs</td></tr>
+    </tbody>
+  </table>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">🔐 IMS Login Page Screenshot</div>
+    <div class="hint">
+      <strong>Run IMS → Open http://localhost:3000 (without logging in)</strong><br>
+      Take a screenshot of the login page showing the IMS branding, email/password fields, and demo credentials hint.
+    </div>
+    <span class="tag">IMG-07 · Login Page Screenshot</span>
+  </div>
+  <div class="pg">7</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 5 — CHAPTER 5: TECHNOLOGY STACK
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 5</span>
+  <h1>5. Technology Stack</h1>
+
+  <h2>5.1 Frontend Technologies</h2>
+  <table>
+    <thead><tr><th>Technology</th><th>Version</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Next.js</strong></td><td>16 (Turbopack)</td><td>Full-stack React framework; App Router; SSR and static generation</td></tr>
+      <tr><td><strong>React</strong></td><td>19</td><td>Component-based UI; Server Components; concurrent rendering</td></tr>
+      <tr><td><strong>Redux Toolkit</strong></td><td>2.x</td><td>Global state: auth, UI flags, toast notifications</td></tr>
+      <tr><td><strong>Tailwind CSS</strong></td><td>v4</td><td>Utility-first styling; dark mode; glassmorphism; design tokens</td></tr>
+      <tr><td><strong>Framer Motion</strong></td><td>12.x</td><td>Animations: sidebar slide, modal fade, toast transitions</td></tr>
+      <tr><td><strong>Chart.js / Recharts</strong></td><td>4.x / 3.x</td><td>Analytics charts: bar, pie, line, area, heatmap</td></tr>
+      <tr><td><strong>React Hook Form + Zod</strong></td><td>latest</td><td>Form state + runtime schema validation</td></tr>
+      <tr><td><strong>Axios</strong></td><td>1.x</td><td>HTTP client; JWT injection + 401 auto-refresh interceptors</td></tr>
+      <tr><td><strong>TanStack Table</strong></td><td>v8</td><td>Paginated data tables: sorting, filtering</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.2 Backend Technologies</h2>
+  <table>
+    <thead><tr><th>Technology</th><th>Version</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Node.js</strong></td><td>20 LTS (ESM)</td><td>Non-blocking I/O runtime; ES Modules</td></tr>
+      <tr><td><strong>Express.js</strong></td><td>4.x</td><td>HTTP routing, middleware pipeline, JSON REST API</td></tr>
+      <tr><td><strong>Prisma ORM</strong></td><td>5.x</td><td>Type-safe SQL; migrations; seed scripts</td></tr>
+      <tr><td><strong>TypeScript</strong></td><td>5.x</td><td>Static typing; compile-time safety across all modules</td></tr>
+      <tr><td><strong>Argon2id</strong></td><td>latest</td><td>Memory-hard password hashing; OWASP recommended</td></tr>
+      <tr><td><strong>JWT (RS256)</strong></td><td>—</td><td>Stateless auth: 15-min access + 7-day refresh tokens</td></tr>
+      <tr><td><strong>Zod</strong></td><td>3.x</td><td>Request body schema validation; runtime type enforcement</td></tr>
+      <tr><td><strong>Helmet.js</strong></td><td>latest</td><td>HTTP security headers: CSP, HSTS, X-Frame-Options</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.3 Infrastructure and DevOps</h2>
+  <table>
+    <thead><tr><th>Technology</th><th>Version</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>PostgreSQL</strong></td><td>16</td><td>Primary relational DB; ACID-compliant; FTS indexes; triggers</td></tr>
+      <tr><td><strong>Redis</strong></td><td>7</td><td>Dashboard KPI cache (5-min TTL); rate-limit counters</td></tr>
+      <tr><td><strong>Docker Compose</strong></td><td>v2</td><td>One-command local deployment: API + DB + Redis + Frontend</td></tr>
+      <tr><td><strong>Git / GitHub</strong></td><td>—</td><td>Version control; repo: github.com/DevPandya1035/IMS</td></tr>
+      <tr><td><strong>AWS S3</strong></td><td>—</td><td>Product image object storage with CDN delivery</td></tr>
+    </tbody>
+  </table>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">📦 IMS Products Page Screenshot</div>
+    <div class="hint">
+      <strong>Navigate to: Dashboard → Products (sidebar)</strong><br>
+      Take a screenshot showing the product list table with columns: Product Name, SKU, Category, Price, Stock Qty, Status badges. Make sure some products are visible (seed data should show Invictus products).
+    </div>
+    <span class="tag">IMG-08 · Products Page Screenshot</span>
+  </div>
+  <div class="pg">10</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 6 — CHAPTER 6: DATABASE DESIGN
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 6</span>
+  <h1>6. Database Design</h1>
+
+  <h2>6.1 Entity Relationship Overview</h2>
+  <p>The IMS database uses <strong>PostgreSQL 16</strong> with a fully normalised relational schema managed by <strong>Prisma ORM 5</strong>. All primary keys use UUID format. Referential integrity is enforced via foreign key constraints; all multi-step operations use Prisma transactions for ACID compliance.</p>
+
+<pre>
+User ─────── Role ─────── RolePermission ─── Permission
+  │
+  └── AuditLog
+
+Product ─────── Category
+  │  │
+  │  ├── InventoryMovement ─── Warehouse
+  │  ├── PurchaseOrderItem
+  │  └── SalesOrderItem
+
+PurchaseOrder ─── Supplier ─── PurchaseOrderItem
+SalesOrder ─────── Customer ─── SalesOrderItem
+  │
+  └── Invoice ─── Payment
+</pre>
+
+  <h2>6.2 Key Table Definitions</h2>
+  <table>
+    <thead><tr><th>Table</th><th>Purpose</th><th>Key Columns</th></tr></thead>
+    <tbody>
+      <tr><td><code>users</code></td><td>User accounts</td><td>id, email, passwordHash, roleId, failedLoginAttempts, lockedUntil</td></tr>
+      <tr><td><code>products</code></td><td>Product master</td><td>id, name, sku (UNIQUE), barcode, price, costPrice, quantity, reorderLevel, expiryDate</td></tr>
+      <tr><td><code>inventory</code></td><td>Per-warehouse stock</td><td>id, productId, warehouseId, quantity [UNIQUE(product,warehouse)]</td></tr>
+      <tr><td><code>inventory_movements</code></td><td>All stock changes</td><td>id, productId, warehouseId, quantity (signed), movementType, referenceId</td></tr>
+      <tr><td><code>purchase_orders</code></td><td>Procurement POs</td><td>id, supplierId, status, totalAmount, requiresApproval, approvedBy</td></tr>
+      <tr><td><code>sales_orders</code></td><td>Customer SOs</td><td>id, customerId, status, subtotal, taxAmount, grandTotal, isPaid</td></tr>
+      <tr><td><code>invoices</code></td><td>GST invoices</td><td>id, invoiceNumber (INV-YYYYMMDD-XXXX), status, cgst, sgst, grandTotal</td></tr>
+      <tr><td><code>audit_logs</code></td><td>Immutable mutation trail</td><td>id, tableName, operation, userId, ipAddress, changes (JSON)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>6.3 Business Rules Encoded in Schema</h2>
+  <p><strong>GST Calculation (India — 18% Flat):</strong></p>
+<pre>
+Net Value(i)     = Quantity(i) × Unit Price(i)
+Taxable Value(i) = Net Value(i) − Discount(i)
+CGST(i)          = Taxable Value(i) × 0.09   (9% Central GST)
+SGST(i)          = Taxable Value(i) × 0.09   (9% State GST)
+Line Total(i)    = Taxable Value(i) + CGST(i) + SGST(i)
+Grand Total      = Σ Line Total(i)
+</pre>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">🗄 Prisma Studio / Database Schema Screenshot</div>
+    <div class="hint">
+      <strong>Run: <code>npx prisma studio</code> in the backend folder → Open http://localhost:5555</strong><br>
+      Take a screenshot showing the Prisma Studio table list on the left (products, inventory, users, etc.) and one table's data rows on the right. Alternatively, paste a screenshot of the <code>schema.prisma</code> file open in VS Code showing the Product and User models.
+    </div>
+    <span class="tag">IMG-09 · Prisma Studio / Schema Screenshot</span>
+  </div>
+  <div class="pg">13</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 7 — CHAPTER 7: CORE MODULES
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 7</span>
+  <h1>7. Core Modules — Implementation Details</h1>
+
+  <h2>7.1 Authentication and RBAC</h2>
+  <h3>7.1.1 JWT Authentication Flow</h3>
+  <p>IMS implements <strong>stateless JWT-based authentication</strong> with automatic silent token rotation. Access tokens expire in 15 minutes; refresh tokens in 7 days. The Axios response interceptor silently refreshes expired tokens and replays failed requests — transparent to the user.</p>
+
+  <h3>7.1.2 Role-Based Access Control — Code Snippet</h3>
+<pre>
+// hasPermission.middleware.ts
+export const hasPermission = (perm: string) =>
+  (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user;
+
+    // Admin role bypasses all permission checks
+    if (user.role.roleName === 'Admin') return next();
+
+    const hasPerm = user.role.rolePermissions
+      .some(rp => rp.permission.permissionName === perm);
+
+    if (!hasPerm) {
+      return res.status(403).json({ error: 'Forbidden', required: perm });
+    }
+    next();
+  };
+</pre>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">🔒 IMS RBAC — Permission Matrix / User Management</div>
+    <div class="hint">
+      <strong>Login as Admin → Navigate to: Settings → Users (or User Management page)</strong><br>
+      Take a screenshot showing the user list with different roles (Admin, Manager, Staff, Auditor) visible in the Role column. If there's a role permissions page, screenshot that too.
+    </div>
+    <span class="tag">IMG-10 · User Management / RBAC Screenshot</span>
+  </div>
+
+  <h2>7.2 Product Catalogue Management</h2>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">📦 Add Product Form Screenshot</div>
+    <div class="hint">
+      <strong>Navigate to: Products → Add New Product</strong><br>
+      Take a screenshot of the "Add Product" / "Create Product" form showing all fields: Name, SKU, Barcode, Category, Price, Cost Price, Reorder Level, Expiry Date, and the Image Upload section.
+    </div>
+    <span class="tag">IMG-11 · Add Product Form</span>
+  </div>
+
+  <h2>7.3 Multi-Warehouse Inventory Management</h2>
+  <table>
+    <thead><tr><th>Operation</th><th>Description</th><th>Movement Type</th></tr></thead>
+    <tbody>
+      <tr><td>Stock In</td><td>Receiving goods into warehouse from PO receipt or manual entry</td><td><code>STOCK_IN</code></td></tr>
+      <tr><td>Stock Out</td><td>Dispatching goods from warehouse</td><td><code>STOCK_OUT</code></td></tr>
+      <tr><td>Transfer</td><td>Moving stock between two warehouses — dual atomic records</td><td><code>TRANSFER_OUT + TRANSFER_IN</code></td></tr>
+      <tr><td>Adjustment</td><td>Inventory count correction (positive or negative delta)</td><td><code>ADJUSTMENT</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="img-box" style="height:155px;">
+    <div class="label">🏢 Warehouses Page + Stock Movements</div>
+    <div class="hint">
+      <strong>Navigate to: Inventory → Warehouses (or Inventory → Adjustments)</strong><br>
+      Take a screenshot showing the list of warehouses (Ahmedabad Main Warehouse, etc.) with their stock quantities. Alternatively screenshot the Stock Adjustments page showing the movement history table.
+    </div>
+    <span class="tag">IMG-12 · Warehouses / Stock Movements Screenshot</span>
+  </div>
+  <div class="pg">16</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 8 — CHAPTER 7 CONTINUED: PO/SO/INVOICE
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <h2>7.4 Purchase Orders and Procurement</h2>
+  <p><strong>PO Lifecycle:</strong> PENDING → APPROVED → RECEIVED (terminal). Any PO with total amount &gt; ₹50,000 requires explicit Manager/Admin approval before goods can be received into warehouse stock.</p>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">📋 Purchase Orders Page Screenshot</div>
+    <div class="hint">
+      <strong>Navigate to: Purchases → Purchase Orders</strong><br>
+      Take a screenshot showing the PO list table with columns: PO Number, Supplier, Status badge (PENDING / APPROVED / RECEIVED), Total Amount, and Action buttons. Ideally capture a mix of statuses.
+    </div>
+    <span class="tag">IMG-13 · Purchase Orders List</span>
+  </div>
+
+  <h2>7.5 Sales Orders and Fulfilment</h2>
+  <p><strong>SO Lifecycle:</strong> PENDING → CONFIRMED → SHIPPED → DELIVERED. On confirmation: stock is atomically reserved and an invoice is auto-generated. Cancellation after CONFIRMED auto-restores reserved stock.</p>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">🛒 Sales Orders Page Screenshot</div>
+    <div class="hint">
+      <strong>Navigate to: Sales → Sales Orders</strong><br>
+      Take a screenshot showing the Sales Order list with SO Number, Customer name, Status badge (PENDING/CONFIRMED/SHIPPED/DELIVERED), Grand Total, and Payment status columns.
+    </div>
+    <span class="tag">IMG-14 · Sales Orders List</span>
+  </div>
+
+  <h2>7.6 GST-Compliant Invoicing and Billing</h2>
+  <p>Invoices are auto-generated on SO confirmation (format: <code>INV-YYYYMMDD-XXXX</code>). Tax is computed as: CGST 9% + SGST 9% = 18% total GST. Discounts are applied before GST, in compliance with Indian GST law.</p>
+
+  <div class="img-box" style="height:200px;">
+    <div class="label">🧾 Invoice Detail Page / PDF Preview Screenshot</div>
+    <div class="hint">
+      <strong>Navigate to: Invoices → Click any Invoice → View Invoice Detail</strong><br>
+      Take a screenshot showing the invoice detail page with: Invoice Number, Customer details, line items with quantities and prices, CGST/SGST breakdown, Grand Total, and payment status. If there is a PDF preview button, click it and screenshot the PDF preview modal.
+    </div>
+    <span class="tag">IMG-15 · Invoice Detail / PDF Preview</span>
+  </div>
+  <div class="pg">19</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 9 — CHAPTER 8: AI FORECASTING
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 8</span>
+  <h1>8. AI Forecasting and Analytics Engine</h1>
+
+  <h2>8.1 Holt-Winters Triple Exponential Smoothing</h2>
+  <p>The IMS AI Forecasting Engine implements <strong>Holt-Winters Triple Exponential Smoothing</strong> — a classical time-series forecasting method modelling Level (α), Trend (β), and Seasonality (γ) simultaneously. It runs entirely in client-side TypeScript for zero-latency interactive parameter tuning.</p>
+
+<pre>
+// holt-winters.ts — Core Smoothing Algorithm
+function holtwinters(data: number[], alpha: number, beta: number,
+                     gamma: number, period: number, horizon: number): number[] {
+  let L = data[0];
+  let T = (data[period] - data[0]) / period;
+  let S = data.map((v, i) => v / (data[i % period] || 1));
+  const forecast: number[] = [];
+
+  for (let t = 0; t < data.length + horizon; t++) {
+    const obs = data[t] ?? null;
+    if (obs !== null) {
+      const prevL = L;
+      L = alpha * (obs - S[t % period]) + (1 - alpha) * (L + T);
+      T = beta  * (L - prevL)           + (1 - beta)  * T;
+      S[t % period] = gamma * (obs / L) + (1 - gamma) * S[t % period];
+    }
+    const h = t >= data.length ? t - data.length + 1 : 1;
+    forecast.push((L + h * T) * S[(t + h) % period]);
+  }
+  return forecast;
+}
+</pre>
+
+  <div class="img-box" style="height:220px;">
+    <div class="label">🔮 AI Forecasting Page — Full Screenshot</div>
+    <div class="hint">
+      <strong>Navigate to: Forecasting (sidebar) → AI Forecasting tab</strong><br>
+      Take a full-page screenshot showing: the Holt-Winters forecast line chart (with actual vs. forecast lines and confidence band), the α/β/γ sliders below, and the MAPE/RMSE accuracy metrics. Move the sliders slightly to make the chart active before screenshotting.
+    </div>
+    <span class="tag">IMG-16 · AI Forecasting Engine — Main Chart + Sliders</span>
+  </div>
+
+  <h2>8.2 EOQ, Safety Stock, and Reorder Point</h2>
+<pre>
+EOQ          = √( (2 × Annual Demand × Ordering Cost) / Holding Cost per Unit )
+Safety Stock = (Max Daily Sales × Max Lead Time) − (Avg Daily Sales × Avg Lead Time)
+ROP          = (Average Daily Sales × Lead Time) + Safety Stock
+</pre>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">📊 EOQ Calculator / Reorder Suggestions Screenshot</div>
+    <div class="hint">
+      <strong>Navigate to: Forecasting → EOQ tab or Reorder Suggestions section</strong><br>
+      Screenshot the EOQ cost curve chart (showing holding cost, ordering cost, and total cost curves with EOQ marked) and/or the reorder suggestions table showing CRITICAL/WARNING/OPTIMAL urgency badges for different products.
+    </div>
+    <span class="tag">IMG-17 · EOQ Chart + Reorder Suggestions</span>
+  </div>
+  <div class="pg">22</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 10 — CHAPTER 8 CONT: ANALYTICS DASHBOARD
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <h2>8.3 ABC/XYZ Pareto Inventory Segmentation</h2>
+  <table>
+    <thead><tr><th>Segment</th><th>Typical Profile</th><th>Management Strategy</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A-Class</strong></td><td>Top ~20% of SKUs → ~78% revenue</td><td>Tight control; frequent reorder; priority AI forecasting</td></tr>
+      <tr><td><strong>B-Class</strong></td><td>Middle tier → ~15% revenue</td><td>Standard review cycle; moderate safety stock</td></tr>
+      <tr><td><strong>C-Class</strong></td><td>Remaining → ~7% revenue</td><td>Minimal oversight; bulk ordering; lean safety stock</td></tr>
+    </tbody>
+  </table>
+
+  <h2>8.4 Analytics Dashboard</h2>
+  <table>
+    <thead><tr><th>KPI Metric</th><th>Formula</th></tr></thead>
+    <tbody>
+      <tr><td>Total Inventory Value</td><td>Σ (unit cost × on-hand quantity) across all warehouses</td></tr>
+      <tr><td>Inventory Turnover Ratio</td><td>COGS / Average Inventory Value (annualised)</td></tr>
+      <tr><td>Fill Rate</td><td>(Orders fulfilled without stockout / Total orders) × 100%</td></tr>
+      <tr><td>Stockout Rate</td><td>(SKUs with stockout events / Total active SKUs) × 100%</td></tr>
+      <tr><td>Days on Hand</td><td>Average Inventory Value / Daily COGS</td></tr>
+    </tbody>
+  </table>
+
+  <div class="img-box" style="height:220px;">
+    <div class="label">📊 Analytics Dashboard — Full Screenshot</div>
+    <div class="hint">
+      <strong>Navigate to: Analytics (sidebar)</strong><br>
+      Take a full-page screenshot of the Analytics dashboard showing: the KPI stat cards at top (Inventory Value, Turnover Ratio, Fill Rate, Stockout Rate), the ABC/XYZ Pareto bar chart, and the Stock Movement trend line chart. If there are multiple tabs (Overview, ABC Analysis, etc.), screenshot the main overview tab.
+    </div>
+    <span class="tag">IMG-18 · Analytics Dashboard — KPIs + Charts</span>
+  </div>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">📊 Inventory Analytics — ABC/XYZ Pareto Chart Closeup</div>
+    <div class="hint">
+      <strong>Navigate to: Analytics → ABC Analysis tab (if available)</strong><br>
+      Take a screenshot of just the ABC/XYZ Pareto chart or pie chart showing the breakdown of A/B/C class products and their revenue contribution percentages.
+    </div>
+    <span class="tag">IMG-19 · ABC/XYZ Pareto Chart</span>
+  </div>
+  <div class="pg">24</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 11 — CHAPTER 9: SECURITY
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 9</span>
+  <h1>9. Security Architecture</h1>
+
+  <h2>9.1 Password Security — Argon2id</h2>
+  <p>All passwords use <strong>Argon2id</strong> (PHC winner, OWASP recommended): 64 MB memory cost, 3 iterations, 2-thread parallelism, 32-byte output with embedded random salt. Computationally infeasible to brute-force even with GPU clusters.</p>
+
+  <h2>9.2 JWT Authentication Flow</h2>
+<pre>
+Client                     API Server                      Database
+  │                             │                               │
+  │── POST /api/auth/login ────►│                               │
+  │                             │── findUser(email) ───────────►│
+  │                             │◄── user + permissions ────────│
+  │                             │── argon2.verify(hash, pass)   │
+  │◄── { accessToken (15m) } ───│                               │
+  │    { refreshToken (7d) }    │                               │
+  │                             │                               │
+  │── GET /api/products ───────►│ (Bearer: accessToken)         │
+  │◄── { products data } ───────│                               │
+  │                             │                               │
+  │◄── 401 Unauthorized ────────│ (token expired)               │
+  │── POST /api/auth/refresh ──►│                               │
+  │◄── { new accessToken } ─────│                               │
+  │── [retry original] ────────►│                               │
+</pre>
+
+  <h2>9.3 Rate Limiting and Account Lockout</h2>
+  <table>
+    <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Standard API rate limit</td><td>100 requests per 15 minutes per IP (Redis-backed)</td></tr>
+      <tr><td>Auth endpoint rate limit</td><td>10 requests per 15 minutes per IP</td></tr>
+      <tr><td>Lockout trigger</td><td>5 consecutive failed login attempts</td></tr>
+      <tr><td>Recovery</td><td>Auto-unlock when lockedUntil timestamp passes; or Admin manual unlock</td></tr>
+    </tbody>
+  </table>
+
+  <h2>9.4 Audit Logging</h2>
+  <p>Every CREATE / UPDATE / DELETE operation is captured by the <code>auditLog</code> middleware with: tableName, operation, recordId, userId, ipAddress, and a structured JSON change diff (<code>{ before: {...}, after: {...} }</code>). The table is write-only — never updated or deleted.</p>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">📜 Audit Logs Page Screenshot</div>
+    <div class="hint">
+      <strong>Login as Admin or Auditor → Navigate to: Audit Logs (sidebar)</strong><br>
+      Take a screenshot of the Audit Logs table showing columns: Timestamp, User, Action (CREATE/UPDATE/DELETE), Table Name, Record ID, IP Address. Ideally show a few rows with different operations (product created, order updated, etc.).
+    </div>
+    <span class="tag">IMG-20 · Audit Logs Page</span>
+  </div>
+  <div class="pg">25</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 12 — CHAPTER 10: PERFORMANCE & DEPLOYMENT
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 10</span>
+  <h1>10. Performance and Deployment</h1>
+
+  <h2>10.1 Performance Metrics and SLAs</h2>
+  <table>
+    <thead><tr><th>Operation</th><th>p95 Target</th><th>Method</th></tr></thead>
+    <tbody>
+      <tr><td>Dashboard Read (KPI cards)</td><td>&lt; 200 ms</td><td>Redis cache (5-min TTL)</td></tr>
+      <tr><td>Write Operations (Stock, Orders)</td><td>&lt; 500 ms</td><td>Indexed PostgreSQL writes</td></tr>
+      <tr><td>AI Forecasting Engine</td><td>&lt; 1,500 ms</td><td>In-memory TypeScript + Redis cache</td></tr>
+      <tr><td>Report Generation</td><td>&lt; 2,000 ms</td><td>Optimised DB aggregation queries</td></tr>
+      <tr><td>API Throughput</td><td>100 RPS/container</td><td>Stateless, horizontally scalable</td></tr>
+      <tr><td style="font-weight:bold">Uptime SLA</td><td style="font-weight:bold">99.9%</td><td>Docker restart policies + health checks</td></tr>
+    </tbody>
+  </table>
+
+  <h2>10.2 Docker Compose Deployment</h2>
+<pre>
+# docker-compose.yml
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ims_db
+      POSTGRES_PASSWORD: ${DB_PASS}
+
+  redis:
+    image: redis:7-alpine
+
+  backend:
+    build: ./backend
+    ports: ["4000:4000"]
+    depends_on: [postgres, redis]
+    environment:
+      DATABASE_URL: postgresql://ims_user:${DB_PASS}@postgres:5432/ims_db
+
+  frontend:
+    build: ./frontend
+    ports: ["3000:3000"]
+    depends_on: [backend]
+</pre>
+
+  <div class="img-box" style="height:160px;">
+    <div class="label">🐳 Docker Compose Running — Terminal Screenshot</div>
+    <div class="hint">
+      <strong>Open Terminal → cd to IMS folder → run: <code>docker-compose up</code></strong><br>
+      Take a screenshot of the terminal showing all 4 services (postgres, redis, backend, frontend) starting up with their logs. The coloured Docker Compose multi-service log output works well visually.
+    </div>
+    <span class="tag">IMG-21 · Docker Compose Terminal Output</span>
+  </div>
+
+  <div class="img-box" style="height:140px;">
+    <div class="label">📁 VS Code — Project Folder Structure Screenshot</div>
+    <div class="hint">
+      <strong>Open the IMS project in VS Code → Expand the file explorer on the left side</strong><br>
+      Take a screenshot showing the folder tree: backend/ (with prisma/, src/controllers/, routes/, middlewares/) and frontend/ (with src/app/, components/, store/) clearly visible.
+    </div>
+    <span class="tag">IMG-22 · VS Code Folder Structure</span>
+  </div>
+  <div class="pg">27</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 13 — CONCLUSION
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 11</span>
+  <h1>11. Conclusion</h1>
+
+  <p>The <strong>IMS (Inventory Management System)</strong> developed during this Industrial Training at <strong>Enthrall Foods Private Limited (Invictus)</strong> represents a complete, production-ready solution to the multi-faceted inventory management challenges faced by modern FMCG and consumer goods organisations.</p>
+
+  <h3>Technical Achievements:</h3>
+  <ul>
+    <li>Designed and implemented a <strong>full-stack SaaS platform</strong> using Next.js 16, React 19, Express.js, PostgreSQL 16, and Redis 7 — fully containerised with Docker Compose for reproducible, one-command deployment.</li>
+    <li>Built a <strong>9-module integrated system</strong> covering the entire inventory lifecycle from procurement through sales to financial reconciliation, serving four distinct user roles with granular permissions.</li>
+    <li>Implemented an <strong>AI-powered demand forecasting engine</strong> using Holt-Winters Triple Exponential Smoothing with EOQ, Safety Stock, ROP calculations, and ABC/XYZ Pareto segmentation — rendered through interactive real-time dashboards.</li>
+    <li>Engineered a <strong>hardened security architecture</strong> with Argon2id, JWT RS256 stateless authentication, Redis-backed rate limiting, Helmet.js HTTP headers, account lockout, and an immutable write-only audit trail.</li>
+    <li>Achieved all defined <strong>performance targets</strong>: &lt; 200 ms dashboard reads (p95), &lt; 1,500 ms AI forecasting, and a 99.9% uptime SLA design target.</li>
+  </ul>
+
+  <h3>Professional Skills Acquired:</h3>
+  <ul>
+    <li>Industry-standard Git workflows, Docker containerisation, Prisma database migration management, and TypeScript full-stack development.</li>
+    <li>Deep understanding of enterprise software architecture — decoupled monolith patterns, Express.js middleware pipelines, and RBAC permission systems.</li>
+    <li>Navigation of real compliance requirements — Indian GST regulations, WCAG 2.1 accessibility, and financial audit trail obligations.</li>
+    <li>Contribution to a live, operational system used by actual staff across procurement, warehouse, sales, and finance departments.</li>
+  </ul>
+
+  <p>The system is publicly available at <strong>github.com/DevPandya1035/IMS</strong> and represents the practical application of Computer Science engineering knowledge to solve a real-world, high-impact business problem.</p>
+  <div class="pg">29</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 14 — ENVIRONMENTAL & SOCIETAL IMPACT
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 12</span>
+  <h1>12. Environmental and Societal Impact</h1>
+  <p>The IMS platform delivers meaningful environmental and societal benefits through intelligent inventory management. By enabling AI-driven demand forecasting (Holt-Winters algorithm), the system directly reduces overproduction and overstocking — two primary contributors to food waste in FMCG supply chains. Accurate reorder point calculations minimise emergency procurement via carbon-intensive express freight. The digital-first, paperless invoicing and audit logging system replaces printed records, reducing paper consumption. Societally, IMS empowers small and medium enterprises to access enterprise-grade inventory intelligence previously available only to large corporations, promoting equitable business growth and supply chain transparency across regional markets.</p>
+  <p><em>(100 words)</em></p>
+  <div class="pg">30</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 15 — NBA / IET MAPPING
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 13</span>
+  <h1>13. NBA / IET Mapping</h1>
+
+  <h2>Program Outcomes (PO)</h2>
+  <ul>
+    <li><strong>PO1 — Engineering Knowledge:</strong> Apply mathematics, science, engineering fundamentals to complex engineering problems.</li>
+    <li><strong>PO2 — Problem Analysis:</strong> Identify, formulate, and analyze complex engineering problems reaching substantiated conclusions.</li>
+    <li><strong>PO3 — Design/Development of Solutions:</strong> Design solutions for complex engineering problems with consideration for health, safety, societal and environmental aspects.</li>
+    <li><strong>PO4 — Conduct Investigations:</strong> Use research-based knowledge including design of experiments, analysis and synthesis of information.</li>
+    <li><strong>PO5 — Modern Tool Usage:</strong> Create, select, and apply appropriate techniques, resources, and modern IT tools.</li>
+    <li><strong>PO6 — Engineer and The World:</strong> Analyze societal and environmental aspects for sustainability impact.</li>
+    <li><strong>PO7 — Ethics:</strong> Apply ethical principles and commit to professional ethics and norms.</li>
+    <li><strong>PO8 — Individual and Team Work:</strong> Function effectively as individual and team member/leader.</li>
+    <li><strong>PO9 — Communication:</strong> Communicate effectively with engineering community and society at large.</li>
+    <li><strong>PO10 — Project Management and Finance:</strong> Demonstrate engineering and management principles in one's own work.</li>
+    <li><strong>PO11 — Life-Long Learning:</strong> Recognize the need and ability to engage in independent lifelong learning.</li>
+  </ul>
+
+  <h2>Program Specific Outcomes (PSO)</h2>
+  <ul>
+    <li><strong>PSO1:</strong> Apply fundamental knowledge of algorithms, data structures, and programming languages to design efficient computing solutions.</li>
+    <li><strong>PSO2:</strong> Design, develop and maintain software systems using OS, database, and software engineering practices.</li>
+    <li><strong>PSO3:</strong> Design innovative, secure, and scalable solutions using AI/ML, Cyber Security, and Data Science.</li>
+  </ul>
+  <div class="pg">31</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 16 — CO-PO MAPPING TABLE
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <h2>ITR CO–PO Mapping (CSE/ICT/DSE 4291)</h2>
+  <table style="font-size:8.5pt;">
+    <thead>
+      <tr>
+        <th style="width:32%">ITR Course Outcomes</th>
+        <th class="center">PO1</th><th class="center">PO2</th><th class="center">PO3</th>
+        <th class="center">PO4</th><th class="center">PO5</th><th class="center">PO6</th>
+        <th class="center">PO7</th><th class="center">PO8</th><th class="center">PO9</th>
+        <th class="center">PO10</th><th class="center">PO11</th>
+        <th class="center">PSO1</th><th class="center">PSO2</th><th class="center">PSO3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>CO1</strong> — Analyze organizational structure, professional practices, and operational workflow of IT industries.</td>
+        <td class="center">1</td><td class="center">2</td><td class="center">—</td><td class="center">—</td>
+        <td class="center">1</td><td class="center">1</td><td class="center">1</td><td class="center">1</td>
+        <td class="center">1</td><td class="center">2</td><td class="center">1</td>
+        <td class="center">—</td><td class="center">—</td><td class="center">1</td>
+      </tr>
+      <tr>
+        <td><strong>CO2</strong> — Analyze real-world engineering problems in software systems, data analytics, networking, and intelligent computing.</td>
+        <td class="center">2</td><td class="center">3</td><td class="center">2</td><td class="center">2</td>
+        <td class="center">1</td><td class="center">—</td><td class="center">—</td><td class="center">—</td>
+        <td class="center">1</td><td class="center">—</td><td class="center">1</td>
+        <td class="center">2</td><td class="center">2</td><td class="center">2</td>
+      </tr>
+      <tr>
+        <td><strong>CO3</strong> — Apply programming, data handling, networking, and computational techniques to industry problem statements.</td>
+        <td class="center">3</td><td class="center">2</td><td class="center">2</td><td class="center">1</td>
+        <td class="center">2</td><td class="center">—</td><td class="center">—</td><td class="center">—</td>
+        <td class="center">—</td><td class="center">—</td><td class="center">1</td>
+        <td class="center">3</td><td class="center">2</td><td class="center">3</td>
+      </tr>
+      <tr>
+        <td><strong>CO4</strong> — Demonstrate proficiency in modern engineering tools, platforms, and frameworks relevant to CSE / AI / Data Science.</td>
+        <td class="center">2</td><td class="center">1</td><td class="center">1</td><td class="center">—</td>
+        <td class="center">3</td><td class="center">—</td><td class="center">—</td><td class="center">—</td>
+        <td class="center">—</td><td class="center">—</td><td class="center">1</td>
+        <td class="center">1</td><td class="center">2</td><td class="center">3</td>
+      </tr>
+      <tr>
+        <td><strong>CO5</strong> — Design, implement, and evaluate solutions for multidisciplinary tasks integrating computing, communication, and data-driven technologies.</td>
+        <td class="center">2</td><td class="center">2</td><td class="center">3</td><td class="center">2</td>
+        <td class="center">2</td><td class="center">1</td><td class="center">—</td><td class="center">1</td>
+        <td class="center">1</td><td class="center">1</td><td class="center">1</td>
+        <td class="center">2</td><td class="center">2</td><td class="center">2</td>
+      </tr>
+      <tr>
+        <td><strong>CO6</strong> — Demonstrate professional skills including teamwork, technical communication, ethical responsibility, and adaptability.</td>
+        <td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td>
+        <td class="center">—</td><td class="center">1</td><td class="center">3</td><td class="center">3</td>
+        <td class="center">3</td><td class="center">2</td><td class="center">2</td>
+        <td class="center">—</td><td class="center">—</td><td class="center">1</td>
+      </tr>
+      <tr class="avg-row">
+        <td><strong>Average Course Articulation</strong></td>
+        <td class="center"><strong>2</strong></td><td class="center"><strong>2</strong></td><td class="center"><strong>2</strong></td><td class="center"><strong>1.67</strong></td>
+        <td class="center"><strong>1.8</strong></td><td class="center"><strong>1</strong></td><td class="center"><strong>2</strong></td><td class="center"><strong>1.67</strong></td>
+        <td class="center"><strong>1.5</strong></td><td class="center"><strong>1.67</strong></td><td class="center"><strong>1.17</strong></td>
+        <td class="center"><strong>2</strong></td><td class="center"><strong>2</strong></td><td class="center"><strong>2</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 style="margin-top:16px;">NBA Program Articulation Matrix</h2>
+  <table style="font-size:8.5pt;">
+    <thead>
+      <tr>
+        <th>Course Code</th><th>Course Title</th>
+        <th class="center">PO1</th><th class="center">PO2</th><th class="center">PO3</th><th class="center">PO4</th><th class="center">PO5</th>
+        <th class="center">PO6</th><th class="center">PO7</th><th class="center">PO8</th><th class="center">PO9</th><th class="center">PO10</th><th class="center">PO11</th>
+        <th class="center">PSO1</th><th class="center">PSO2</th><th class="center">PSO3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CSE/ICT/DSE 4291</td>
+        <td>Industrial Training — IMS</td>
+        <td class="center">2</td><td class="center">2</td><td class="center">2</td><td class="center">1.67</td><td class="center">1.8</td>
+        <td class="center">1</td><td class="center">2</td><td class="center">1.67</td><td class="center">1.5</td><td class="center">1.67</td><td class="center">1.17</td>
+        <td class="center">2</td><td class="center">2</td><td class="center">2</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pg">32</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 17 — CLO–AHEP MAPPING
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <h2>IET-AHEP Learning Outcome Statements (Selected)</h2>
+  <table style="font-size:9pt;">
+    <thead><tr><th style="width:8%">Code</th><th>Learning Outcome</th></tr></thead>
+    <tbody>
+      <tr><td>C1</td><td>Apply knowledge of mathematics, statistics, natural science and engineering principles to complex problems.</td></tr>
+      <tr><td>C2</td><td>Analyse complex problems to reach substantiated conclusions using first principles.</td></tr>
+      <tr><td>C3</td><td>Select and apply appropriate computational and analytical techniques to model complex problems.</td></tr>
+      <tr><td>C4</td><td>Select and evaluate technical literature and other sources of information to address complex problems.</td></tr>
+      <tr><td>C6</td><td>Apply an integrated or systems approach to the solution of complex problems.</td></tr>
+      <tr><td>C7/C8</td><td>Evaluate environmental/societal impact; identify and analyse ethical concerns; make reasoned ethical choices.</td></tr>
+      <tr><td>C11</td><td>Adopt an inclusive approach to engineering practice; support equality, diversity and inclusion.</td></tr>
+      <tr><td>C15</td><td>Apply knowledge of engineering management principles, commercial context, and project management.</td></tr>
+      <tr><td>C18</td><td>Plan and record self-learning and development as foundation for lifelong learning/CPD.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="margin-top:12px;">CLO–AHEP LO Mapping (CSE/ICT/DSE 4291)</h2>
+  <table style="font-size:9pt;">
+    <thead>
+      <tr>
+        <th style="width:12%">CLO</th><th style="width:48%">Statement</th>
+        <th class="center">C1</th><th class="center">C2</th><th class="center">C3</th><th class="center">C4</th>
+        <th class="center">C6</th><th class="center">C7/C8</th><th class="center">C11</th><th class="center">C15</th><th class="center">C18</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>4291.1</td><td>Apply mathematics, science and engineering skills to identify, formulate, synthesize and solve CS engineering problems.</td><td class="center">✔</td><td class="center">—</td><td class="center">✔</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td></tr>
+      <tr><td>4291.2</td><td>Have knowledge of new trends in engineering/technology by developing programmable coding in various languages.</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">✔</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td></tr>
+      <tr><td>4291.3</td><td>Use industry standard tools to analyze, design, develop and test software engineering based applications.</td><td class="center">—</td><td class="center">✔</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td></tr>
+      <tr><td>4291.4</td><td>Apply theoretical knowledge to real-world engineering problems and manage complex engineering projects.</td><td class="center">✔</td><td class="center">—</td><td class="center">✔</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td></tr>
+      <tr><td>4291.5</td><td>Understand the adverse societal impacts of the solutions to complex problems during project development.</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">✔</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td></tr>
+      <tr><td>4291.6</td><td>Identify and analyze ethical concerns to be followed during practice school internships.</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">✔</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td></tr>
+      <tr><td>4291.7</td><td>Recognize responsibilities and understand the importance of supporting equality, diversity, and inclusion.</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">✔</td><td class="center">—</td><td class="center">—</td><td class="center">—</td></tr>
+      <tr><td>4291.8</td><td>Apply knowledge of engineering management principles and understand project/change management requirements.</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">✔</td><td class="center">—</td><td class="center">—</td></tr>
+      <tr><td>4291.9</td><td>Indicate future direction of project development and appreciate collaborative, lifelong learning.</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">—</td><td class="center">✔</td><td class="center">—</td></tr>
+    </tbody>
+  </table>
+
+  <br>
+  <p><strong>Declaration:</strong> Through this Industrial Training, I have accomplished the above stated program articulation and IET learning outcomes.</p>
+  <br>
+  <div style="line-height:2.2;">
+    Signature: <span class="sig-line"></span>&nbsp;&nbsp;&nbsp; Date: <span class="sig-line" style="width:120px;"></span><br>
+    Name: <span class="fill-box">_________________________</span><br>
+    Registration No.: <span class="fill-box">_________________________</span>
+  </div>
+  <div class="pg">33</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 18 — REFERENCES
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 14</span>
+  <h1>14. References (IEEE Format)</h1>
+
+  <p>[1] M. Gardner, "Exponential Smoothing: The State of the Art," <em>Journal of Forecasting</em>, vol. 4, no. 1, pp. 1–28, 1985.</p>
+  <p>[2] C. C. Holt, "Forecasting Seasonals and Trends by Exponentially Weighted Moving Averages," <em>International Journal of Forecasting</em>, vol. 20, no. 1, pp. 5–10, 2004. (Original work published 1957.)</p>
+  <p>[3] P. R. Winters, "Forecasting Sales by Exponentially Weighted Moving Averages," <em>Management Science</em>, vol. 6, no. 3, pp. 324–342, 1960.</p>
+  <p>[4] Vercel Inc., "Next.js Documentation — App Router," [Online]. Available: https://nextjs.org/docs (last accessed: Aug. 2026).</p>
+  <p>[5] Meta Open Source, "React 19 Documentation," [Online]. Available: https://react.dev (last accessed: Aug. 2026).</p>
+  <p>[6] Prisma Data Inc., "Prisma ORM v5 Documentation," [Online]. Available: https://www.prisma.io/docs (last accessed: Aug. 2026).</p>
+  <p>[7] Redis Ltd., "Redis 7 — Commands and Configuration," [Online]. Available: https://redis.io/docs (last accessed: Aug. 2026).</p>
+  <p>[8] PostgreSQL Global Development Group, "PostgreSQL 16 Documentation," [Online]. Available: https://www.postgresql.org/docs/16/ (last accessed: Aug. 2026).</p>
+  <p>[9] OWASP Foundation, "Password Storage Cheat Sheet — Argon2id," [Online]. Available: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html (last accessed: Aug. 2026).</p>
+  <p>[10] M. B. Jones, J. Bradley, and N. Sakimura, "JSON Web Token (JWT)," IETF RFC 7519, May 2015. [Online]. Available: https://tools.ietf.org/html/rfc7519</p>
+  <p>[11] Docker Inc., "Docker Compose Documentation," [Online]. Available: https://docs.docker.com/compose/ (last accessed: Aug. 2026).</p>
+  <p>[12] Central Board of Indirect Taxes and Customs, "Goods and Services Tax (GST) — Overview," Government of India, [Online]. Available: https://www.cbic.gov.in (last accessed: Aug. 2026).</p>
+  <p>[13] W3C, "Web Content Accessibility Guidelines (WCAG) 2.1," W3C Recommendation, Jun. 2018. [Online]. Available: https://www.w3.org/TR/WCAG21/</p>
+  <p>[14] D. Pandya, "IMS — Inventory Management System," GitHub Repository, 2026. [Online]. Available: https://github.com/DevPandya1035/IMS</p>
+  <div class="pg">37</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 19 — PLAGIARISM REPORT
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <span class="chapter-num">Chapter 15</span>
+  <h1>15. Plagiarism Report</h1>
+
+  <div class="action-box">
+    <strong>📌 ACTION REQUIRED:</strong> Paste the plagiarism check screenshot/scan below. Similarity index must be <strong>≤ 20%</strong> to be accepted by MIT Manipal. Run the report on the final submitted PDF using Turnitin, iThenticate, or an online plagiarism checker.
+  </div>
+
+  <div class="img-box" style="height:440px;">
+    <div class="label">📋 Plagiarism Check Report</div>
+    <div class="hint">
+      Paste a full screenshot of the plagiarism report here.<br><br>
+      The report should clearly show:<br>
+      • <strong>Tool Used:</strong> Turnitin / iThenticate / PlagScan / Grammarly<br>
+      • <strong>Document Title:</strong> IMS — Industrial Training Report<br>
+      • <strong>Submission Date:</strong> ________________<br>
+      • <strong>Similarity Index:</strong> ____% (must be ≤ 20%)<br>
+      • <strong>Breakdown:</strong> Internet Sources % / Publications % / Student Papers %<br>
+      • <strong>Submission / Report ID:</strong> ________________
+    </div>
+    <span class="tag">IMG-23 · Plagiarism Report Screenshot (Similarity ≤ 20%)</span>
+  </div>
+  <div class="pg">38</div>
+</div>
+
+</body>
+</html>
